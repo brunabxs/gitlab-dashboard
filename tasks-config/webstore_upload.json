@@ -1,0 +1,15 @@
+{
+    "accounts": {
+        "default": {
+            "publish": true,
+            "client_id": "<%= webstore_upload_clientid %>",
+            "client_secret": "<%= webstore_upload_clientsecret %>"
+        }
+    },
+    "extensions": {
+        "gitlab-dashboard": {
+            "appID": "<%= webstore_upload_appid %>",
+            "zip": "dist/gitlab-dashboard-<%= pkg.version %>.zip"
+        }
+    }
+}

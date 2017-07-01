@@ -1,0 +1,13 @@
+{
+    "process-manifest-template": {
+        "options": {
+            "data": {
+                "version": "<%= pkg.version %>",
+                "description": "<%= pkg.description %>"
+            }
+        },
+        "files": {
+            "app/manifest.json": ["app/manifest.template.json"]
+        }
+    }
+}

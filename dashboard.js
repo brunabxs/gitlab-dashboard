@@ -1,19 +1,18 @@
-$(document).ready(function () {
-  $.ajax({
-    url: 'https://gitlab.com/api/v4/projects?membership=true',
-    headers: {
-      'PRIVATE-TOKEN': '3oBioprn2GjJ52bdwBJ2'
-    },
+function displayProjects(projects) {
+  _.each(projects, function (project) {
+    $('#dashboard').append('<div class="project"><a href="' + project.url + '">' + project.name + '</a></div>');
+  });
+};
 
-  })
-  .done(function(data, textStatus, jqXHR) {
-    _.each(data, function (project) {
-      $("#dashboard").append("<div class=\"project\">" + project.name + "</div>");
-    });
-    console.log(data);
-  })
-  .fail(function (jqXHR, textStatus, errorThrown) {
-    console.log(textStatus);
-    console.log(errorThrown);
-  })
+
+$(document).ready(function () {
+  var api = new GitLabApi('https://gitlab.com/api/v4', '3oBioprn2GjJ52bdwBJ2');
+
+  api.projects()
+    .then(function (projects) {
+      displayProjects(projects);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
 });

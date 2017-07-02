@@ -1,7 +1,10 @@
 app/manifest.json
+config/
 dist/
+webstore_storage.json
 
-
+# VS Code
+.vscode/
 
 # Logs
 logs

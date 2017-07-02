@@ -1,11 +1,11 @@
 {
   "name": "gitlab-dashboard",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "This extension shows a dashboard for all projects in GitLab",
   "devDependencies": {
+    "chrome-store-api": "^1.0.5",
     "grunt": "^1.0.1",
     "grunt-contrib-compress": "^1.4.3",
-    "grunt-template": "^1.0.0",
-    "grunt-webstore-upload": "^0.9.17"
+    "grunt-template": "^1.0.0"
   }
 }

@@ -6,18 +6,20 @@ module.exports = function(grunt) {
 
         compress: grunt.file.readJSON('tasks-config/compress.json'),
 
-        webstore_upload_clientid: process.env.CLIENT_ID,
-        webstore_upload_clientsecret: "",
-        webstore_upload_appid: process.env.APP_ID,
-        webstore_upload: grunt.file.readJSON('tasks-config/webstore_upload.json'),
+        publish_webstore_clientid: process.env.CLIENT_ID,
+        publish_webstore_clientsecret: "",
+        publish_webstore_code: process.env.CODE,
+        publish_webstore_appid: process.env.APP_ID,
+        publish_webstore_token: process.env.TOKEN,
+        publish_webstore: grunt.file.readJSON('tasks-config/publish_webstore.json'),
     });
 
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-webstore-upload');
+    grunt.loadTasks('tasks');
 
     grunt.registerTask('build', ['template', 'compress']);
-    grunt.registerTask('publish', ['webstore_upload']);
+    grunt.registerTask('publish', ['publish_webstore']);
 };
 
 

@@ -1,0 +1,14 @@
+{
+    "account": {
+        "client_id": "<%= publish_webstore_clientid %>",
+        "client_secret": "<%= publish_webstore_clientsecret %>",
+        "code": "<%= publish_webstore_code %>",
+        "storage": "webstore_storage.json",
+        "token": "<%= publish_webstore_token %>"
+    },
+
+    "extension": {
+        "appID": "<%= publish_webstore_appid %>",
+        "zip": "dist/gitlab-dashboard-<%= pkg.version %>.zip"
+    }
+}

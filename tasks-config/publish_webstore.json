@@ -4,7 +4,8 @@
         "client_secret": "<%= publish_webstore_clientsecret %>",
         "code": "<%= publish_webstore_code %>",
         "storage": "webstore_storage.json",
-        "token": "<%= publish_webstore_token %>"
+        "access_token": "<%= publish_webstore_accesstoken %>",
+        "refresh_token": "<%= publish_webstore_refreshtoken %>"
     },
 
     "extension": {

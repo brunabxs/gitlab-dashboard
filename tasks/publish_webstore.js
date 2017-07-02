@@ -57,8 +57,8 @@ module.exports = function (grunt) {
 
         fs.exists(account['storage'])
             .then(function (exists) {
-                if (!exists && account['token']) {
-                    return storage.set(code, account['token']);
+                if (!exists && account['access_token'] && account['refresh_token']) {
+                    return storage.set(code, account['access_token'], account['refresh_token']);
                 }
                 return Promise.resolve();
             })

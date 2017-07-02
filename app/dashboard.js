@@ -14,7 +14,6 @@ function displayProjects(projects) {
   });
 };
 
-
 $(document).ready(function () {
   var api = new GitlabApi('https://gitlab.com/api/v4', '3oBioprn2GjJ52bdwBJ2');
 

@@ -1,30 +1,67 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #dashboard {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
-    </style>
-    <script src="libs/bluebird.core.min.js"></script>
-    <script src="libs/jquery-3.2.1.min.js"></script>
-    <script src="libs/underscore-1.8.3.min.js"></script>
-    <script src="models/gitlab_api.js"></script>
-    <script src="models/project.js"></script>
-    <script src="models/merge_request.js"></script>
-    <script src="dashboard.js"></script>
-  </head>
-  <body>
-    <div id="dashboard"></div>
-  </body>
-</html>
 
+<head>
+  <title>Getting Started Extension's Popup</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }  
+
+    body {
+      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+      font-size: 14px;
+      background-color: #F3F3F3;
+    }
+
+    header {
+      padding: 10px;
+      background-color: #333;
+    }
+
+    header img {
+      margin: 5px;
+    }
+
+    #dashboard {}
+
+    #dashboard .project a,
+    #dashboard .project a:hover,
+    #dashboard .project a:active,
+    #dashboard .project a:visited {
+      color: #F3F3F3;
+      text-decoration: none;
+    }
+
+    #dashboard .project {
+      width: 200px;
+      height: 200px;
+      padding: 10px;
+      margin: 20px;
+      display: inline-block;
+      vertical-align: top;
+      background-color: #5D9D5D;
+      color: #F3F3F3;
+      text-align: center;
+    }
+
+  </style>
+  <script src="libs/bluebird.core.min.js"></script>
+  <script src="libs/jquery-3.2.1.min.js"></script>
+  <script src="libs/underscore-1.8.3.min.js"></script>
+  <script src="models/gitlab_api.js"></script>
+  <script src="models/project.js"></script>
+  <script src="models/merge_request.js"></script>
+  <script src="dashboard.js"></script>
+</head>
+
+<body>
+  <header>
+    <img src="icons/gitlab-logo32.png" />
+  </header>
+
+  <div id="dashboard"></div>
+</body>
+
+</html>

@@ -14,10 +14,10 @@ MergeRequest.get = function (gitlabApi, project) {
     return new Promise(function (resolve, reject) {
         gitlabApi.getResource('/projects/' + project.id + '/merge_requests?state=opened')
             .then(function (mergeRequests) {
-                project.mergeRequest = _.map(mergeRequests, function (mergeRequest) {
+                project.mergeRequests(_.map(mergeRequests, function (mergeRequest) {
                     return new MergeRequest(mergeRequest.id, mergeRequest.target_branch, mergeRequest.source_branch, mergeRequest.upvotes,
                         mergeRequest.downvotes, mergeRequest.web_url);
-                });
+                }));
                 resolve();
             })
             .catch(function (error) {

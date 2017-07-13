@@ -1,27 +1,25 @@
-function displayProjects(projects) {
-  _.each(projects, function (project) {
-    $('#dashboard').append(
-      '<div class="project">' +
-        '<a href="' + project.url + '">' + project.name + '</a>' +
-      '</div>'
-    );
+function DashboardViewModel() {
+  var self = this;
 
-    _.each(project.mergeRequests, function (mergeRequest, index) {
-      $('#dashboard').last().append(
-        '<div>MR #' + mergeRequest.id + '(<span>' + mergeRequest.upvote + '</span>/<span>' + mergeRequest.downvote + '</span>)</div>'
-      );
-    });
-  });
-};
+  self.api = new GitlabApi('https://gitlab.com/api/v4', '3oBioprn2GjJ52bdwBJ2');
+  self.projects = ko.observableArray([]);
 
-$(document).ready(function () {
-  var api = new GitlabApi('https://gitlab.com/api/v4', '3oBioprn2GjJ52bdwBJ2');
-
-  Project.get(api)
+  Project.get(self.api)
     .then(function (projects) {
-      displayProjects(projects);
+      self.projects(projects);
     })
     .catch(function (error) {
       console.log(error);
     })
+}
+
+$(document).ready(function () {
+  ko.bindingProvider.instance = new ko.secureBindingsProvider({
+    attribute: "data-bind",
+    globals: window,
+    bindings: ko.bindingHandlers,
+    noVirtualElements: false,
+  });
+
+  ko.applyBindings(new DashboardViewModel());
 });

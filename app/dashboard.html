@@ -11,7 +11,7 @@
 
     body {
       font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       background-color: #F3F3F3;
     }
 
@@ -35,23 +35,71 @@
     }
 
     #dashboard .project {
-      width: 200px;
-      height: 200px;
-      padding: 10px;
-      margin: 20px;
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 20px 10px 10px 10px;
       display: inline-block;
       vertical-align: top;
       background-color: #5D9D5D;
       color: #F3F3F3;
       text-align: center;
+      box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+      -moz-box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+    }
+
+    #dashboard .project .name {
+      font-size: 12px;
+      text-align: center;
+      margin: 20px 20px 0px 20px;
+      opacity: 0.8;
+    }
+
+    #dashboard .project .pipeline-status {
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-align: center;
+      margin: 0px 20px;
+    }
+
+    #dashboard .project .pipeline-scope {
+      font-size: 14px;
+      margin-right: 10px;
+    }
+
+    #dashboard .project .pipeline-branch {
+      font-size: 14px;
+      margin-left: 10px;
+    }
+
+    #dashboard .project .pipeline-branch:before {
+      content: "#";
+      position: relative;
+    }
+
+    #dashboard .project footer {
+      width: 170px;
+      height: 15px;
+      font-size: 10px;
+      text-transform: uppercase;
+      text-align: left;
+      border-top: 1px #CCC solid;
+      padding: 5px;
+      position: absolute;
+      bottom: 0;
+      opacity: 0.7;
     }
 
   </style>
   <script src="libs/bluebird.core.min.js"></script>
   <script src="libs/jquery-3.2.1.min.js"></script>
+  <script src="libs/knockout-3.4.2.js"></script>
+  <script src="libs/knockout-secure-binding.js"></script>
   <script src="libs/underscore-1.8.3.min.js"></script>
   <script src="models/gitlab_api.js"></script>
   <script src="models/project.js"></script>
+  <script src="models/pipeline.js"></script>
   <script src="models/merge_request.js"></script>
   <script src="dashboard.js"></script>
 </head>
@@ -61,7 +109,16 @@
     <img src="icons/gitlab-logo32.png" />
   </header>
 
-  <div id="dashboard"></div>
+  <div id="dashboard" data-bind="foreach: projects()">
+    <div class="project">
+      <p class="name" data-bind="text: name"></p>
+      <!-- ko if: pipeline() -->
+        <p class="pipeline-status" data-bind="text: pipeline().status"></p>
+        <p><span class="pipeline-scope" data-bind="text: pipeline().scope"></span><span class="pipeline-branch" data-bind="text: pipeline().branch"></span></p>
+      <!-- /ko -->
+      <footer></footer>
+    </div>
+  </div>
 </body>
 
 </html>

@@ -3,7 +3,9 @@ var Project = function (id, name, url) {
 
     self.id = id;
     self.name = name;
-    self.url = url
+    self.url = url;
+    self.pipeline = ko.observable();
+    self.mergeRequests = ko.observableArray([]);
 };
 
 Project.get = function (gitlabApi) {

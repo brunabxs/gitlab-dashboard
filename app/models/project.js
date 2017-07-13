@@ -24,6 +24,9 @@ Project.get = function (gitlabApi) {
                 _.each(data, function (project) {
                     promises.push(MergeRequest.get(gitlabApi, project));
                 });
+                _.each(data, function (project) {
+                    promises.push(Pipeline.get(gitlabApi, project));
+                });
                 return Promise.all(promises);
             })
             .then(function (data) {

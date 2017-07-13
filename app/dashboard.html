@@ -41,11 +41,23 @@
       margin: 20px 10px 10px 10px;
       display: inline-block;
       vertical-align: top;
-      background-color: #5D9D5D;
+      background-color: #666666;
       color: #F3F3F3;
       text-align: center;
       box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
       -moz-box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+    }
+
+    #dashboard .project.success {
+      background-color: #5D9D5D;
+    }
+
+    #dashboard .project.failed {
+      background-color: #C1172D;
+    }
+
+    #dashboard .project.pending {
+      background-color: #FA6900;
     }
 
     #dashboard .project .name {
@@ -110,12 +122,10 @@
   </header>
 
   <div id="dashboard" data-bind="foreach: projects()">
-    <div class="project">
+    <div class="project" data-bind="css: pipeline().status">
       <p class="name" data-bind="text: name"></p>
-      <!-- ko if: pipeline() -->
-        <p class="pipeline-status" data-bind="text: pipeline().status"></p>
-        <p><span class="pipeline-scope" data-bind="text: pipeline().scope"></span><span class="pipeline-branch" data-bind="text: pipeline().branch"></span></p>
-      <!-- /ko -->
+      <p class="pipeline-status" data-bind="text: pipeline().status"></p>
+      <p><span class="pipeline-scope" data-bind="text: pipeline().scope"></span><span class="pipeline-branch" data-bind="text: pipeline().branch"></span></p>
       <footer></footer>
     </div>
   </div>

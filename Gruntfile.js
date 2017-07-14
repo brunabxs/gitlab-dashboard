@@ -18,6 +18,8 @@ module.exports = function (grunt) {
             all: ['**/*.js', '!node_modules/**', '!app/libs/**']
         },
 
+        conventionalChangelog: grunt.file.readJSON('tasks-config/conventional_changelog.json'),
+
         bump: grunt.file.readJSON('tasks-config/bump.json'),
 
         // TODO: apply minify
@@ -28,6 +30,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-conventional-changelog');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadTasks('tasks');
 
@@ -38,6 +41,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'bump:' + (type || 'patch') + ':bump-only',
             'build',
+            'conventionalChangelog',
             'bump-commit',
             //'publish',
         ]);

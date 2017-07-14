@@ -1,0 +1,10 @@
+{
+    "release": {
+        "options": {
+            "changelogOpts": {
+                "preset": "angular"
+            }
+        },
+        "src": "CHANGELOG.md"
+    }
+}

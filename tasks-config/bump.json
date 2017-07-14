@@ -4,7 +4,8 @@
             "pkg"
         ],
         "commitFiles": [
-            "package.json"
+            "package.json",
+            "CHANGELOG.md"
         ],
         "commitMessage": "Release v%VERSION%",
         "push": "false"

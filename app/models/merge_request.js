@@ -16,6 +16,11 @@ MergeRequest.loadAll = function (gitlabApi, dashboard) {
     });
 };
 
+MergeRequest.updateAll = function (gitlabApi, dashboard) {
+    var self = this;
+    MergeRequest.loadAll(gitlabApi, dashboard);
+};
+
 MergeRequest.load = function (gitlabApi, dashboard, project) {
     var self = this;
     gitlabApi.getResource('/projects/' + project.id + '/merge_requests?state=opened')

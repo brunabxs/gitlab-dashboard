@@ -1,4 +1,4 @@
-function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken) {
+function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken, dashboardRefreshRate) {
   var self = this;
 
   self.api = new GitlabApi(gitlabApiEndpoint, gitlabPrivateToken);
@@ -6,6 +6,10 @@ function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken) {
   self.errors = ko.observableArray([]);
 
   Project.loadAll(self.api, self);
+
+  setInterval(function () {
+    Project.updateAll(self.api, self);
+  }, dashboardRefreshRate * 1000);
 }
 
 $(document).ready(function () {
@@ -18,8 +22,9 @@ $(document).ready(function () {
 
   chrome.storage.sync.get({
     'gitlab': '',
-    'gitlabPrivateToken': ''
+    'gitlabPrivateToken': '',
+    'dashboardRefreshRate': 3
   }, function (items) {
-    ko.applyBindings(new DashboardViewModel(items.gitlab, items.gitlabPrivateToken));
+    ko.applyBindings(new DashboardViewModel(items.gitlab, items.gitlabPrivateToken, items.dashboardRefreshRate));
   });
 });

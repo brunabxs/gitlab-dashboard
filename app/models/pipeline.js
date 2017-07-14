@@ -3,7 +3,7 @@ var Pipeline = function (id, scope, status, branch, commit, url) {
 
     self.id = id;
     self.scope = scope;
-    self.status = ko.observable(status);
+    self.status = status;
     self.branch = branch;
     self.commit = commit;
     self.url = url;
@@ -14,6 +14,11 @@ Pipeline.loadAll = function (gitlabApi, dashboard) {
     _.each(dashboard.projects(), function (project) {
         Pipeline.load(gitlabApi, dashboard, project);
     });
+};
+
+Pipeline.updateAll = function (gitlabApi, dashboard) {
+    var self = this;
+    Pipeline.loadAll(gitlabApi, dashboard);
 };
 
 Pipeline.load = function (gitlabApi, dashboard, project) {

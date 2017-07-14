@@ -1,7 +1,7 @@
-function DashboardViewModel() {
+function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken) {
   var self = this;
 
-  self.api = new GitlabApi('https://gitlab.com/api/v4', '3oBioprn2GjJ52bdwBJ2');
+  self.api = new GitlabApi(gitlabApiEndpoint, gitlabPrivateToken);
   self.projects = ko.observableArray([]);
 
   Project.get(self.api)
@@ -15,11 +15,16 @@ function DashboardViewModel() {
 
 $(document).ready(function () {
   ko.bindingProvider.instance = new ko.secureBindingsProvider({
-    attribute: "data-bind",
+    attribute: 'data-bind',
     globals: window,
     bindings: ko.bindingHandlers,
     noVirtualElements: false,
   });
 
-  ko.applyBindings(new DashboardViewModel());
+  chrome.storage.sync.get({
+    'gitlab': '',
+    'gitlabPrivateToken': ''
+  }, function (items) {
+    ko.applyBindings(new DashboardViewModel(items.gitlab, items.gitlabPrivateToken));
+  });
 });

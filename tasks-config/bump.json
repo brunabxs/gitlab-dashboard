@@ -1,0 +1,12 @@
+{
+    "options": {
+        "updateConfigs": [
+            "pkg"
+        ],
+        "commitFiles": [
+            "package.json"
+        ],
+        "commitMessage": "Release v%VERSION%",
+        "push": "false"
+    }
+}

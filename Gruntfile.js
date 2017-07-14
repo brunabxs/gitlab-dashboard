@@ -18,16 +18,28 @@ module.exports = function (grunt) {
             all: ['**/*.js', '!node_modules/**', '!app/libs/**']
         },
 
+        bump: grunt.file.readJSON('tasks-config/bump.json'),
+
         // TODO: apply minify
         // TODO: apply uglify
         // TODO: analyze package.json to create libs folder
     });
 
-    grunt.loadNpmTasks('grunt-template');
+    grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-template');
     grunt.loadTasks('tasks');
 
     grunt.registerTask('build', ['jshint', 'template', 'compress']);
     grunt.registerTask('publish', ['publish_webstore']);
+
+    grunt.registerTask('release', 'Build, bump and publish to Webstore', function (type) {
+        grunt.task.run([
+            'bump:' + (type || 'patch') + ':bump-only',
+            'build',
+            'bump-commit',
+            //'publish',
+        ]);
+    });
 };

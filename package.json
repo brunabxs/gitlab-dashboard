@@ -5,6 +5,7 @@
   "devDependencies": {
     "chrome-store-api": "^1.0.5",
     "grunt": "^1.0.1",
+    "grunt-bump": "^0.8.0",
     "grunt-contrib-compress": "^1.4.3",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-template": "^1.0.0"

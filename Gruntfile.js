@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -13,12 +13,21 @@ module.exports = function(grunt) {
         publish_webstore_accesstoken: process.env.ACCESS_TOKEN,
         publish_webstore_refreshtoken: process.env.REFRESH_TOKEN,
         publish_webstore: grunt.file.readJSON('tasks-config/publish_webstore.json'),
+
+        jshint: {
+            all: ['**/*.js', '!node_modules/**', '!app/libs/**']
+        },
+
+        // TODO: apply minify
+        // TODO: apply uglify
+        // TODO: analyze package.json to create libs folder
     });
 
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadTasks('tasks');
 
-    grunt.registerTask('build', ['template', 'compress']);
+    grunt.registerTask('build', ['jshint', 'template', 'compress']);
     grunt.registerTask('publish', ['publish_webstore']);
 };

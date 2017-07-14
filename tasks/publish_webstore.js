@@ -13,16 +13,16 @@ module.exports = function (grunt) {
         grunt.config.requires(accountConfigPath);
 
         var extension = grunt.config(extensionConfigPath);
-        var appId = extension['appID'];
-        var zip = extension['zip'];
+        var appId = extension.appID;
+        var zip = extension.zip;
 
         var account = grunt.config(accountConfigPath);
-        var clientId = account['client_id'];
-        var clientSecret = account['client_secret'];
-        var code = account['code'];
+        var clientId = account.client_id;
+        var clientSecret = account.client_secret;
+        var code = account.code;
 
         var done = this.async();
-        var storage = new FileStorage(account['storage']);
+        var storage = new FileStorage(account.storage);
         var tokenManager = new TokenManager(code, clientId, clientSecret, storage);
         var api = new WebstoreApi(tokenManager);
 
@@ -55,10 +55,10 @@ module.exports = function (grunt) {
                 });
         };
 
-        fs.exists(account['storage'])
+        fs.exists(account.storage)
             .then(function (exists) {
-                if (!exists && account['access_token'] && account['refresh_token']) {
-                    return storage.set(code, account['access_token'], account['refresh_token']);
+                if (!exists && account.access_token && account.refresh_token) {
+                    return storage.set(code, account.access_token, account.refresh_token);
                 }
                 return Promise.resolve();
             })

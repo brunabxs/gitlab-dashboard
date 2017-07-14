@@ -6,34 +6,26 @@ var Project = function (id, name, url) {
     self.url = url;
     self.pipeline = ko.observable();
     self.mergeRequests = ko.observableArray([]);
+
+    self.status = ko.pureComputed(function () {
+        if (self.pipeline())
+            return self.pipeline().status;
+        return 'unavailable';
+    });
 };
 
-Project.get = function (gitlabApi) {
+Project.loadAll = function (gitlabApi, dashboard) {
     var self = this;
-    var projects;
-    return new Promise(function (resolve, reject) {
-        gitlabApi.getResource('/projects?membership=true')
-            .then(function (data) {
-                projects = _.map(data, function (project) {
-                    return new Project(project.id, project.name, project.web_url);
-                });
-                return Promise.resolve(projects);
-            })
-            .then(function (data) {
-                var promises = [];
-                _.each(data, function (project) {
-                    promises.push(MergeRequest.get(gitlabApi, project));
-                });
-                _.each(data, function (project) {
-                    promises.push(Pipeline.get(gitlabApi, project));
-                });
-                return Promise.all(promises);
-            })
-            .then(function (data) {
-                resolve(projects);
-            })
-            .catch(function (error) {
-                reject(error);
-            });
-    });
+    gitlabApi.getResource('/projects?membership=true')
+        .then(function (data) {
+            dashboard.projects(_.map(data, function (project) {
+                return new Project(project.id, project.name, project.web_url);
+            }));
+
+            MergeRequest.loadAll(gitlabApi, dashboard);
+            Pipeline.loadAll(gitlabApi, dashboard);
+        })
+        .catch(function (error) {
+            dashboard.errors.push(error);
+        });
 };

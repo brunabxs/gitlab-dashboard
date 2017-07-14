@@ -102,6 +102,28 @@
       bottom: 0;
       opacity: 0.7;
     }
+
+    .loading {
+      animation: spin 2s linear infinite;
+    }
+
+    .loading.loading-project {
+      border: 16px solid #F3F3F3;
+      border-top: 16px solid #FA6900;
+      border-radius: 50%;
+      margin: 10px auto;
+      width: 40px;
+      height: 40px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
   <script src="libs/bluebird.core.min.js"></script>
   <script src="libs/jquery-3.2.1.min.js"></script>
@@ -121,10 +143,15 @@
   </header>
 
   <div id="dashboard" data-bind="foreach: projects()">
-    <div class="project" data-bind="css: pipeline().status">
+    <div class="project" data-bind="css: status()">
       <p class="name" data-bind="text: name"></p>
+      <!-- ko if: pipeline() -->
       <p class="pipeline-status" data-bind="text: pipeline().status"></p>
       <p><span class="pipeline-scope" data-bind="text: pipeline().scope"></span><span class="pipeline-branch" data-bind="text: pipeline().branch"></span></p>
+      <!-- /ko -->
+      <!-- ko if: !pipeline() -->
+      <div class="loading loading-project"></div>
+      <!-- /ko -->
       <footer></footer>
     </div>
   </div>

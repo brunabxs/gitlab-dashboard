@@ -3,14 +3,9 @@ function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken) {
 
   self.api = new GitlabApi(gitlabApiEndpoint, gitlabPrivateToken);
   self.projects = ko.observableArray([]);
+  self.errors = ko.observableArray([]);
 
-  Project.get(self.api)
-    .then(function (projects) {
-      self.projects(projects);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+  Project.loadAll(self.api, self);
 }
 
 $(document).ready(function () {

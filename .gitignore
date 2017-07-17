@@ -2,6 +2,7 @@ app/manifest.json
 config/
 dist/
 webstore_storage.json
+.travis.yml
 
 # VS Code
 .vscode/

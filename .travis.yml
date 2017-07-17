@@ -5,4 +5,3 @@ before_script:
   - npm install grunt-cli -g
 after_script:
   - grunt build
-  - grunt publish 

@@ -1,3 +1,6 @@
+var $ = require('jquery');
+var Promise = require('bluebird');
+
 var GitlabApi = function (gitlabApiEndpoint, gitlabPrivateToken) {
     var self = this;
 
@@ -16,10 +19,14 @@ GitlabApi.prototype.getResource = function (resource) {
         })
             .done(function (data, textStatus, jqXHR) {
                 resolve(data);
+                return null;
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 // TODO: return a better error
-                reject(textStatus);
+                reject(new Error(textStatus));
+                return null;
             });
     });
 };
+
+module.exports = GitlabApi;

@@ -1,3 +1,8 @@
+var _ = require('underscore');
+var ko = require('knockout');
+var MergeRequest = require('./merge_request.js');
+var Pipeline = require('./pipeline.js');
+
 var Project = function (id, name, url) {
     var self = this;
 
@@ -24,9 +29,11 @@ Project.loadAll = function (gitlabApi, dashboard) {
 
             MergeRequest.loadAll(gitlabApi, dashboard);
             Pipeline.loadAll(gitlabApi, dashboard);
+            return null;
         })
         .catch(function (error) {
             dashboard.errors.push(error);
+            return null;
         });
 };
 
@@ -49,8 +56,12 @@ Project.updateAll = function (gitlabApi, dashboard) {
 
             MergeRequest.updateAll(gitlabApi, dashboard);
             Pipeline.updateAll(gitlabApi, dashboard);
+            return null;
         })
         .catch(function (error) {
             dashboard.errors.push(error);
+            return null;
         });
 };
+
+module.exports = Project;

@@ -1,3 +1,6 @@
+var _ = require('underscore');
+var Promise = require('bluebird');
+
 var Pipeline = function (id, scope, status, branch, commit, url) {
     var self = this;
 
@@ -46,8 +49,12 @@ Pipeline.load = function (gitlabApi, dashboard, project) {
                 var pipeline = job.pipeline;
                 project.pipeline(new Pipeline(pipeline.id, job.stage, pipeline.status, pipeline.ref, job.commit.short_id, ''));
             }
+            return null;
         })
         .catch(function (error) {
             dashboard.erros.push(error);
+            return null;
         });
 };
+
+module.exports = Pipeline;

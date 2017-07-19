@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var MergeRequest = function (id, targetBranch, sourceBranch, upvotes, downvotes, url) {
     var self = this;
 
@@ -29,8 +31,12 @@ MergeRequest.load = function (gitlabApi, dashboard, project) {
                 return new MergeRequest(mergeRequest.id, mergeRequest.target_branch, mergeRequest.source_branch, mergeRequest.upvotes,
                     mergeRequest.downvotes, mergeRequest.web_url);
             }));
+            return null;
         })
         .catch(function (error) {
             dashboard.errors.push(error);
+            return null;
         });
 };
+
+module.exports = MergeRequest;

@@ -1,3 +1,5 @@
+var $ = require('jquery');
+
 function saveOptions() {
     chrome.storage.sync.set({
         'gitlab': $('#gitlab').val(),

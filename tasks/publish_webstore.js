@@ -1,67 +1,58 @@
-var WebstoreApi = require('chrome-store-api').Webstore;
-var TokenManager = require('chrome-store-api').TokenManager;
-var FileStorage = require('chrome-store-api').FileStorage;
+var _fs = require('fs');
 var fs = require('q-io/fs');
+var FileStorage = require('chrome-store-api').FileStorage;
+var TokenManager = require('chrome-store-api').TokenManager;
+var WebstoreApi = require('chrome-store-api').Webstore;
 
-module.exports = function (grunt) {
-    grunt.registerTask('publish_webstore', function () {
-        var _task = this;
-        var extensionConfigPath = _task.name + '.extension';
-        var accountConfigPath = _task.name + '.account';
+module.exports = function (done) {
+    var package = JSON.parse(_fs.readFileSync('./package.json'));
 
-        grunt.config.requires(extensionConfigPath);
-        grunt.config.requires(accountConfigPath);
+    var appId = process.env.APP_ID;
+    var zip = 'dist/gitlab-dashboard-' + package.version + '.zip';
 
-        var extension = grunt.config(extensionConfigPath);
-        var appId = extension.appID;
-        var zip = extension.zip;
+    var clientId = process.env.CLIENT_ID;
+    var clientSecret = process.env.CLIENT_SECRET;
+    var code = process.env.CODE;
 
-        var account = grunt.config(accountConfigPath);
-        var clientId = account.client_id;
-        var clientSecret = account.client_secret;
-        var code = account.code;
+    var storageFilePath = './webstore_storage.json';
+    var accessToken = process.env.ACCESS_TOKEN;
+    var refreshToken = process.env.REFRESH_TOKEN;
 
-        var done = this.async();
-        var storage = new FileStorage(account.storage);
-        var tokenManager = new TokenManager(code, clientId, clientSecret, storage);
-        var api = new WebstoreApi(tokenManager);
+    var storage = new FileStorage(storageFilePath);
+    var tokenManager = new TokenManager(code, clientId, clientSecret, storage);
+    var api = new WebstoreApi(tokenManager);
 
-        var publish = function () {
-            // api.get(appId)
-            //     .then(function (data) {
-            //         grunt.log.writeln(JSON.stringify(data));
-            //         done();
-            //     })
-            //     .catch(function (err) {
-            //         grunt.log.writeln(JSON.stringify(err));
-            //         done(false);
-            //     });
-
-            fs.read(zip, 'b')
-                .then(function (blob) {
-                    return api.update(appId, blob);
-                })
-                .then(function (data) {
-                    grunt.log.writeln(JSON.stringify(data));
-                    return api.publish(appId);
-                })
-                .then(function (data) {
-                    grunt.log.writeln(JSON.stringify(data));
-                    done();
-                })
-                .catch(function (error) {
-                    grunt.log.writeln(JSON.stringify(error));
-                    done(false);
-                });
-        };
-
-        fs.exists(account.storage)
-            .then(function (exists) {
-                if (!exists && account.access_token && account.refresh_token) {
-                    return storage.set(code, account.access_token, account.refresh_token);
-                }
-                return Promise.resolve();
+    var publish = function () {
+        // api.get(appId)
+        //     .then(function (data) {
+        //         console.log(JSON.stringify(data));
+        //         done();
+        //     })
+        //     .catch(function (err) {
+        //         console.log(JSON.stringify(err));
+        //         done(false);
+        //     });
+        fs.read(zip, 'b')
+            .then(function (blob) {
+                return api.update(appId, blob);
             })
-            .then(publish);
-    });
+            .then(function (data) {
+                return api.publish(appId);
+            })
+            .then(function (data) {
+                done();
+            })
+            .catch(function (error) {
+                done(false);
+            });
+    };
+
+    fs.exists(storageFilePath)
+        .then(function (exists) {
+            if (accessToken && refreshToken) {
+                return storage.set(code, accessToken, refreshToken);
+            }
+            return Promise.resolve();
+        })
+        .then(publish);
 };

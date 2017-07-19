@@ -7,6 +7,7 @@
     "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.7.0",
+    "gulp-clean": "^0.3.2",
     "gulp-conventional-changelog": "^1.1.4",
     "gulp-git": "^2.4.1",
     "gulp-jshint": "^2.0.4",

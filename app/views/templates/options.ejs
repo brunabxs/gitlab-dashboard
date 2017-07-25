@@ -6,64 +6,11 @@
         <%= htmlWebpackPlugin.options.title %>
     </title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link href="options.css" rel="stylesheet" />
+    <script src="options.js"></script>
 </head>
 
 <body>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
-
-        body {
-            font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-            font-size: 16px;
-        }
-
-        #options {
-            display: table;
-        }
-
-        #options .option {
-            display: table-row;
-        }
-
-        label {
-            font-size: 12px;
-            color: #333333;
-            display: table-cell;
-            text-align: right;
-        }
-
-        input#gitlab,
-        input#gitlab-private-token,
-        input#dashboard-refresh-rate {
-            font-size: 12px;
-            color: #333333;
-            display: table-cell;
-            border: 1px solid #ccc;
-            margin-left: 8px;
-            margin-bottom: 10px;
-        }
-
-        #status {
-            color: #25649f;
-            display: inline-block;
-            margin-top: 15px;
-        }
-
-        #save {
-            background: #25649f;
-            color: #FFFFFF;
-            border: 1px solid #25549f;
-            text-shadow: none;
-            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            margin-top: 15px;
-        }
-    </style>
-    <script src="options.js"></script>
-
     <div id="options">
         <div class="option">
             <label for="gitlab">GitLab URL</label>

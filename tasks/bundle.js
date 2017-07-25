@@ -7,7 +7,7 @@ var webpackConfig = require('../webpack.config.js');
 
 module.exports = function () {
     return stream.merge(
-        gulp.src(['app/**/icons/*.png', 'app/*.html'])
+        gulp.src(['app/**/icons/*.png', 'app/views/styles/*.css'])
             .pipe(gulp.dest(tasksConfig.dist_dir)),
         gulp.src('')
             .pipe(webpack(webpackConfig))

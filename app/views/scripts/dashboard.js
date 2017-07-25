@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var ko = require('knockout');
 var ksb = require('knockout-secure-binding');
-var GitlabApi = require('../app/models/gitlab_api.js');
-var Project = require('../app/models/project.js');
+var GitlabApi = require('../../models/gitlab_api.js');
+var Project = require('../../models/project.js');
 
 function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken, dashboardRefreshRate) {
     var self = this;

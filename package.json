@@ -16,6 +16,7 @@
     "gulp-template": "^4.0.0",
     "gulp-webpack": "^1.5.0",
     "gulp-zip": "^4.0.0",
+    "html-webpack-plugin": "^2.29.0",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "run-sequence": "^2.0.0"

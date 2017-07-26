@@ -1,6 +1,5 @@
 var $ = require('jquery');
-var ko = require('knockout');
-var ksb = require('knockout-secure-binding');
+var ko = require('../../helpers/knockout.js');
 var GitlabApi = require('../../models/gitlab_api.js');
 var Project = require('../../models/project.js');
 
@@ -19,13 +18,6 @@ function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken, dashboardRefr
 }
 
 $(document).ready(function () {
-    ko.bindingProvider.instance = new ksb({
-        attribute: 'data-bind',
-        globals: window,
-        bindings: ko.bindingHandlers,
-        noVirtualElements: false,
-    });
-
     chrome.storage.sync.get({
         'gitlab': '',
         'gitlabPrivateToken': '',

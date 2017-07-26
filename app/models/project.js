@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var ko = require('knockout');
+var ko = require('../helpers/knockout.js');
 var MergeRequest = require('./merge_request.js');
 var Pipeline = require('./pipeline.js');
 

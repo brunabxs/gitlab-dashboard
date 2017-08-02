@@ -1,7 +1,13 @@
 language: node_js
 node_js:
   - "node"
-before_script:
-  - npm install gulp -g
-after_script:
-  - gulp build
+jobs:
+  include:
+    - stage: release
+      script:
+        - npm install gulp -g
+        - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_COMMIT_MESSAGE != Release* ]]; then gulp release-ci; fi;
+    - stage: publish
+      script:
+        - npm install gulp -g
+        - if [[ $TRAVIS_TAG ]]; then gulp publish-ci; fi;

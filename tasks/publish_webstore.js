@@ -43,6 +43,7 @@ module.exports = function (done) {
                 done();
             })
             .catch(function (error) {
+                console.log(JSON.stringify(error));
                 done(false);
             });
     };

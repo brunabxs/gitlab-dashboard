@@ -1,19 +1,30 @@
+var _ = require('underscore');
 var $ = require('jquery');
 var ko = require('../../helpers/knockout.js');
 var GitlabApi = require('../../models/gitlab_api.js');
+var Pipeline = require('../../models/pipeline.js');
 var Project = require('../../models/project.js');
 
 function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken, dashboardRefreshRate) {
     var self = this;
+    var api = new GitlabApi(gitlabApiEndpoint, gitlabPrivateToken);
 
-    self.api = new GitlabApi(gitlabApiEndpoint, gitlabPrivateToken);
     self.projects = ko.observableArray([]);
     self.errors = ko.observableArray([]);
 
-    Project.loadAll(self.api, self);
+    Project.api = api;
+    Project.viewModel = self;
+    Pipeline.api = api;
+    Pipeline.viewModel = self;
+
+    Project.loadAll();
 
     setInterval(function () {
-        Project.updateAll(self.api, self);
+        Project.updateAll();
+
+        _.each(self.projects(), function (project) {
+            Pipeline.load.call(project);
+        });
     }, dashboardRefreshRate * 1000);
 }
 

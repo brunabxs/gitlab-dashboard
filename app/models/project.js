@@ -9,8 +9,8 @@ var Project = function (id, name, url) {
     self.id = id;
     self.name = name;
     self.url = url;
-    self.pipeline = ko.observable();
-    self.mergeRequests = ko.observableArray([]);
+    self.pipeline = ko.onDemandObservable(Pipeline.load, self);
+    //self.mergeRequests = ko.onDemandObservableArray([]);
 
     self.status = ko.pureComputed(function () {
         if (self.pipeline())
@@ -19,47 +19,47 @@ var Project = function (id, name, url) {
     });
 };
 
-Project.loadAll = function (gitlabApi, dashboard) {
+Project.viewModel = undefined;
+Project.api = undefined;
+
+Project.loadAll = function () {
     var self = this;
-    gitlabApi.getResource('/projects?membership=true')
+
+    Project.api.getProjects()
         .then(function (data) {
-            dashboard.projects(_.map(data, function (project) {
+            Project.viewModel.projects(_.map(data, function (project) {
                 return new Project(project.id, project.name, project.web_url);
             }));
-
-            MergeRequest.loadAll(gitlabApi, dashboard);
-            Pipeline.loadAll(gitlabApi, dashboard);
             return null;
         })
         .catch(function (error) {
-            dashboard.errors.push(error);
+            console.log(error);
             return null;
         });
 };
 
-Project.updateAll = function (gitlabApi, dashboard) {
+Project.updateAll = function () {
     var self = this;
-    gitlabApi.getResource('/projects?membership=true')
+
+    Project.api.getProjects()
         .then(function (data) {
-            var projectNames = new Set();
-            _.each(dashboard.projects(), function (project) {
-                projectNames.add(project.name);
+            var oldProjectIds = new Set();
+            _.each(Project.viewModel.projects(), function (project) {
+                oldProjectIds.add(project.id);
             });
 
             _.each(data, function (project) {
-                if (!projectNames.has(project.name)) {
-                    dashboard.projects.push(new Project(project.id, project.name, project.web_url));
+                if (!oldProjectIds.has(project.id)) {
+                    Project.viewModel.projects.push(new Project(project.id, project.name, project.web_url));
                 }
             });
 
-            // TODO: remove projects from dashboard that no longer exists
+            // TODO: remove projects from viewModel that no longer exists
 
-            MergeRequest.updateAll(gitlabApi, dashboard);
-            Pipeline.updateAll(gitlabApi, dashboard);
             return null;
         })
         .catch(function (error) {
-            dashboard.errors.push(error);
+            console.log(error);
             return null;
         });
 };

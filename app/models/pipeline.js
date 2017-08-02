@@ -12,47 +12,29 @@ var Pipeline = function (id, scope, status, branch, commit, url) {
     self.url = url;
 };
 
-Pipeline.loadAll = function (gitlabApi, dashboard) {
-    var self = this;
-    _.each(dashboard.projects(), function (project) {
-        Pipeline.load(gitlabApi, dashboard, project);
-    });
-};
+Pipeline.viewModel = undefined;
+Pipeline.api = undefined;
 
-Pipeline.updateAll = function (gitlabApi, dashboard) {
+Pipeline.load = function () {
     var self = this;
-    Pipeline.loadAll(gitlabApi, dashboard);
-};
+    var api = Pipeline.api;
 
-Pipeline.load = function (gitlabApi, dashboard, project) {
-    var self = this;
-    gitlabApi.getResource('/projects/' + project.id + '/pipelines?ref=master&sort=desc')
-        .then(function (pipelines) {
-            if (pipelines.length > 0) {
-                return gitlabApi.getResource('/projects/' + project.id + '/pipelines/' + pipelines[0].id);
-            }
-            return Promise.resolve();
-        })
+    api.getRecentPipeline(self.id)
         .then(function (pipeline) {
             if (pipeline) {
-                return gitlabApi.getResource('/projects/' + project.id + '/pipelines/' + pipeline.id + '/jobs?scope[]=' + pipeline.status);
+                return api.getRecentJobWithScope(self.id, pipeline.id, pipeline.status);
             }
             return Promise.resolve();
         })
-        .then(function (jobs) {
-            if (jobs) {
-                jobs = jobs.sort(function (jobLeft, jobRight) {
-                    return new Date(jobRight.started_at) - new Date(jobLeft.started_at);
-                });
-
-                var job = jobs[0];
+        .then(function (job) {
+            if (job) {
                 var pipeline = job.pipeline;
-                project.pipeline(new Pipeline(pipeline.id, job.stage, pipeline.status, pipeline.ref, job.commit.short_id, ''));
+                self.pipeline(new Pipeline(pipeline.id, job.stage, pipeline.status, pipeline.ref, job.commit.short_id, ''));
             }
             return null;
         })
         .catch(function (error) {
-            dashboard.erros.push(error);
+            console.log(error);
             return null;
         });
 };

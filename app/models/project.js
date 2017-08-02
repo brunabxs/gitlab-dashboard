@@ -48,13 +48,17 @@ Project.updateAll = function () {
                 oldProjectIds.add(project.id);
             });
 
+            var newProjectIds = new Set();
             _.each(data, function (project) {
                 if (!oldProjectIds.has(project.id)) {
                     Project.viewModel.projects.push(new Project(project.id, project.name, project.web_url));
                 }
+                newProjectIds.add(project.id);
             });
 
-            // TODO: remove projects from viewModel that no longer exists
+            Project.viewModel.projects.remove(function (project) {
+                return !newProjectIds.has(project.id);
+            });
 
             return null;
         })

@@ -2,6 +2,7 @@ var _ = require('underscore');
 var $ = require('jquery');
 var ko = require('../../helpers/knockout.js');
 var GitlabApi = require('../../models/gitlab_api.js');
+var MergeRequest = require('../../models/merge_request.js');
 var Pipeline = require('../../models/pipeline.js');
 var Project = require('../../models/project.js');
 
@@ -16,6 +17,8 @@ function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken, dashboardRefr
     Project.viewModel = self;
     Pipeline.api = api;
     Pipeline.viewModel = self;
+    MergeRequest.api = api;
+    MergeRequest.viewModel = self;
 
     Project.loadAll();
 
@@ -24,6 +27,7 @@ function DashboardViewModel(gitlabApiEndpoint, gitlabPrivateToken, dashboardRefr
 
         _.each(self.projects(), function (project) {
             Pipeline.load.call(project);
+            MergeRequest.load.call(project);
         });
     }, dashboardRefreshRate * 1000);
 }

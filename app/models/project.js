@@ -10,7 +10,7 @@ var Project = function (id, name, url) {
     self.name = name;
     self.url = url;
     self.pipeline = ko.onDemandObservable(Pipeline.load, self);
-    //self.mergeRequests = ko.onDemandObservableArray([]);
+    self.mergeRequests = ko.onDemandObservableArray(MergeRequest.load, self);
 
     self.status = ko.pureComputed(function () {
         if (self.pipeline())

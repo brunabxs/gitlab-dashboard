@@ -78,4 +78,9 @@ GitlabApi.prototype.getRecentJobWithScope = function (projectId, pipelineId, job
     });
 };
 
+GitlabApi.prototype.getOpenedMergeRequests = function (projectId) {
+    var self = this;
+    return self.getResource('/projects/' + projectId + '/merge_requests?state=opened');
+};
+
 module.exports = GitlabApi;

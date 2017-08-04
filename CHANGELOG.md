@@ -1,3 +1,21 @@
+<a name="0.0.11"></a>
+## [0.0.11](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.10...v0.0.11) (2017-08-04)
+
+
+### Bug Fixes
+
+* Add CHANGELOG.md and package.json files to commit ([6aa677f](https://github.com/brunabxs/gitlab-dashboard/commit/6aa677f))
+* Insert TravisCI git user to allow Travis release the product ([1f37f3d](https://github.com/brunabxs/gitlab-dashboard/commit/1f37f3d))
+
+
+### Features
+
+* Load merge request information on demand ([d37b9b2](https://github.com/brunabxs/gitlab-dashboard/commit/d37b9b2))
+* Load pipeline information on demand ([8dd505b](https://github.com/brunabxs/gitlab-dashboard/commit/8dd505b))
+* Remove projects that no longer exists from view ([c812cf0](https://github.com/brunabxs/gitlab-dashboard/commit/c812cf0))
+
+
+
 <a name="0.0.10"></a>
 ## [0.0.10](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.9...v0.0.10) (2017-07-14)
 

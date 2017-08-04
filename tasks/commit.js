@@ -6,5 +6,6 @@ module.exports = function () {
     var package = JSON.parse(fs.readFileSync('./package.json'));
 
     return gulp.src('.')
+        .pipe(git.add())
         .pipe(git.commit('Release v' + package.version));
 };

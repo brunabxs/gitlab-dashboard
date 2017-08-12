@@ -1,3 +1,13 @@
+<a name="0.0.12"></a>
+## [0.0.12](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.11...v0.0.12) (2017-08-12)
+
+
+### Features
+
+* Allow user to select which projects should be visible in dashboard in options page ([fe30c55](https://github.com/brunabxs/gitlab-dashboard/commit/fe30c55))
+
+
+
 <a name="0.0.11"></a>
 ## [0.0.11](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.10...v0.0.11) (2017-08-04)
 

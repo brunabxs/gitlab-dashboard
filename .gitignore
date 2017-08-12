@@ -3,6 +3,7 @@ config/
 dist/
 webstore_storage.json
 .travis.yml
+package-lock.json
 
 # VS Code
 .vscode/

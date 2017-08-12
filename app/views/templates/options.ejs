@@ -11,22 +11,55 @@
 </head>
 
 <body>
-    <div id="options">
+    <section id="gitlab-options" class="options">
+        <header>
+            <h5>GitLab Configuration</h5>
+        </header>
+
         <div class="option">
-            <label for="gitlab">GitLab URL</label>
-            <input id="gitlab" type="text" />
+            <label class="label" for="gitlab">GitLab URL</label>
+            <input class="input" id="gitlab" type="text" />
         </div>
 
         <div class="option">
-            <label for="gitlab-private-token">GitLab Private Token</label>
-            <input id="gitlab-private-token" type="text" />
+            <label class="label" for="gitlab-private-token">GitLab Private Token</label>
+            <input class="input" id="gitlab-private-token" type="text" />
         </div>
+    </section>
+
+    <section id="dashboard-options" class="options">
+        <header>
+            <h5>Dashboard Configuration</h5>
+        </header>
 
         <div class="option">
-            <label for="dashboard-refresh-rate">Dashboard Refresh Rate (seconds)</label>
-            <input id="dashboard-refresh-rate" type="number" min="1" required />
+            <label class="label" for="dashboard-refresh-rate">Dashboard Refresh Rate (seconds)</label>
+            <input class="input" id="dashboard-refresh-rate" type="number" min="1" required />
         </div>
-    </div>
+    </section>
+
+    <section id="project-options" class="options">
+        <header>
+            <h5>Projects Configuration</h5>
+        </header>
+        <!-- ko if: !projects().length -->
+        <div class="loading loading-projects"></div>
+        <!-- /ko -->
+        <!-- ko foreach: projects -->
+        <div class="option">
+            <div class="label" data-bind="text: name"></div>
+            <div>
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-bind="attr: {'id': 'switch' + id}, checked: visible">
+                    <label class="onoffswitch-label" data-bind="attr: {'for': 'switch' + id}">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </section>
 
     <button id="save">Save</button>
     <p id="status"></p>

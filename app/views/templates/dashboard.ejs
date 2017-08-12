@@ -15,7 +15,7 @@
         <img src="icons/gitlab-logo32.png" />
     </header>
 
-    <div id="dashboard" data-bind="foreach: projects()">
+    <div id="dashboard" data-bind="foreach: visibleProjects()">
         <div class="project" data-bind="css: status()">
             <p class="name" data-bind="text: name"></p>
             <!-- ko if: pipeline() -->

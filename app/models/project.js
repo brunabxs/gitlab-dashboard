@@ -11,6 +11,7 @@ var Project = function (id, name, url) {
     self.url = url;
     self.pipeline = ko.onDemandObservable(Pipeline.load, self);
     self.mergeRequests = ko.onDemandObservableArray(MergeRequest.load, self);
+    self.visible = ko.observable(true);
 
     self.status = ko.pureComputed(function () {
         if (self.pipeline())
@@ -22,7 +23,7 @@ var Project = function (id, name, url) {
 Project.viewModel = undefined;
 Project.api = undefined;
 
-Project.loadAll = function () {
+Project.loadAll = function (projectsInfo) {
     var self = this;
 
     Project.api.getProjects()
@@ -30,6 +31,16 @@ Project.loadAll = function () {
             Project.viewModel.projects(_.map(data, function (project) {
                 return new Project(project.id, project.name, project.web_url);
             }));
+
+            if (projectsInfo) {
+                _.each(Project.viewModel.projects(), function (project) {
+                    project.visible(projectsInfo[project.id].visible);
+                });
+            }
+
+            Project.viewModel.projects().sort(function (left, right) {
+                return left.name < right.name ? -1 : 1;
+            });
             return null;
         })
         .catch(function (error) {

@@ -7,7 +7,7 @@ var zip = require('gulp-zip');
 module.exports = function () {
     var package = JSON.parse(fs.readFileSync('./package.json'));
 
-    return gulp.src(tasksConfig.dist_dir + '/*')
+    return gulp.src(tasksConfig.dist_dir + '/**/*')
         .pipe(rename(function (path) {
             path.dirname = 'gitlab-dashboard/' + path.dirname;
         }))

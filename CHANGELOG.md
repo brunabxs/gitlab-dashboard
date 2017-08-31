@@ -1,3 +1,13 @@
+<a name="0.0.13"></a>
+## [0.0.13](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.12...v0.0.13) (2017-08-31)
+
+
+### Bug Fixes
+
+* Package icons ([aff0943](https://github.com/brunabxs/gitlab-dashboard/commit/aff0943))
+
+
+
 <a name="0.0.12"></a>
 ## [0.0.12](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.11...v0.0.12) (2017-08-12)
 

@@ -29,7 +29,7 @@ Project.loadAll = function (projectsInfo) {
     Project.api.getProjects()
         .then(function (data) {
             Project.viewModel.projects(_.map(data, function (project) {
-                return new Project(project.id, project.name, project.web_url);
+                return new Project(project.id, project.name_with_namespace, project.web_url);
             }));
 
             if (projectsInfo) {
@@ -62,7 +62,7 @@ Project.updateAll = function () {
             var newProjectIds = new Set();
             _.each(data, function (project) {
                 if (!oldProjectIds.has(project.id)) {
-                    Project.viewModel.projects.push(new Project(project.id, project.name, project.web_url));
+                    Project.viewModel.projects.push(new Project(project.id, project.name_with_namespace, project.web_url));
                 }
                 newProjectIds.add(project.id);
             });

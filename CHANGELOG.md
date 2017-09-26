@@ -1,3 +1,19 @@
+<a name="0.0.14"></a>
+## [0.0.14](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.13...v0.0.14) (2017-09-26)
+
+
+### Bug Fixes
+
+* Remove package-lock.json from git ([7e03f32](https://github.com/brunabxs/gitlab-dashboard/commit/7e03f32))
+
+
+### Features
+
+* Load public, private and internal projects ([91c37a5](https://github.com/brunabxs/gitlab-dashboard/commit/91c37a5))
+* Show the namespace in project's name ([345c3a9](https://github.com/brunabxs/gitlab-dashboard/commit/345c3a9))
+
+
+
 <a name="0.0.13"></a>
 ## [0.0.13](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.12...v0.0.13) (2017-08-31)
 

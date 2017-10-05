@@ -55,10 +55,15 @@ GitlabApi.prototype.getProjects = function () {
     });
 };
 
-GitlabApi.prototype.getRecentPipeline = function (projectId) {
+GitlabApi.prototype.getBranches = function (projectId) {
+    var self = this;
+    return self.getResource('/projects/' + projectId + '/repository/branches');
+};
+
+GitlabApi.prototype.getRecentPipeline = function (projectId, branch) {
     var self = this;
     return new Promise(function (resolve, reject) {
-        self.getResource('/projects/' + projectId + '/pipelines?ref=master&sort=desc')
+        self.getResource('/projects/' + projectId + '/pipelines?ref=' + branch + '&sort=desc')
             .then(function (pipelines) {
                 var pipeline;
                 if (pipelines && pipelines.length > 0) {

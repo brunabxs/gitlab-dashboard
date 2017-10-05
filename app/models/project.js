@@ -3,11 +3,12 @@ var ko = require('../helpers/knockout.js');
 var MergeRequest = require('./merge_request.js');
 var Pipeline = require('./pipeline.js');
 
-var Project = function (id, name, url) {
+var Project = function (id, name, branch, url) {
     var self = this;
 
     self.id = id;
     self.name = name;
+    self.branch = branch;
     self.url = url;
     self.pipeline = ko.onDemandObservable(Pipeline.load, self);
     self.mergeRequests = ko.onDemandObservableArray(MergeRequest.load, self);
@@ -17,6 +18,10 @@ var Project = function (id, name, url) {
         if (self.pipeline())
             return self.pipeline().status;
         return 'unavailable';
+    });
+
+    self.identifier = ko.pureComputed(function () {
+        return self.id + '#' + self.branch;
     });
 };
 
@@ -28,18 +33,22 @@ Project.loadAll = function (projectsInfo) {
 
     Project.api.getProjects()
         .then(function (data) {
-            Project.viewModel.projects(_.map(data, function (project) {
-                return new Project(project.id, project.name_with_namespace, project.web_url);
-            }));
-
-            if (projectsInfo) {
-                _.each(Project.viewModel.projects(), function (project) {
-                    project.visible(projectsInfo[project.id].visible);
-                });
-            }
-
-            Project.viewModel.projects().sort(function (left, right) {
-                return left.name < right.name ? -1 : 1;
+            _.each(data, function (raw_project) {
+                Project.api.getBranches(raw_project.id)
+                    .then(function (data_branches) {
+                        _.each(data_branches, function (raw_branch) {
+                            var project = new Project(raw_project.id, raw_project.name_with_namespace, raw_branch.name, raw_project.web_url);
+                            if (projectsInfo[project.identifier()]) {
+                                project.visible(projectsInfo[project.identifier()].visible);
+                            }
+                            Project.viewModel.projects.push(project);
+                        });
+                        return null;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        return null;
+                    });
             });
             return null;
         })
@@ -51,27 +60,37 @@ Project.loadAll = function (projectsInfo) {
 
 Project.updateAll = function () {
     var self = this;
+    var oldProjectIds = new Set();
 
     Project.api.getProjects()
         .then(function (data) {
-            var oldProjectIds = new Set();
             _.each(Project.viewModel.projects(), function (project) {
-                oldProjectIds.add(project.id);
+                oldProjectIds.add(project.identifier());
             });
 
-            var newProjectIds = new Set();
-            _.each(data, function (project) {
-                if (!oldProjectIds.has(project.id)) {
-                    Project.viewModel.projects.push(new Project(project.id, project.name_with_namespace, project.web_url));
-                }
-                newProjectIds.add(project.id);
+            var promises = [];
+            _.each(data, function (raw_project) {
+                promise = Project.api.getBranches(raw_project.id)
+                    .then(function (data_branches) {
+                        _.each(data_branches, function (raw_branch) {
+                            var project = new Project(raw_project.id, raw_project.name_with_namespace, raw_branch.name, raw_project.web_url);
+                            if (oldProjectIds.has(project.identifier())) {
+                                oldProjectIds.delete(project.identifier());
+                            }
+                            else {
+                                Project.viewModel.projects.push(project);
+                            }
+                        });
+                        return Promise.resolve();
+                    });
+                promises.push(promise);
             });
-
+            return Promise.all(promises);
+        })
+        .then(function () {
             Project.viewModel.projects.remove(function (project) {
-                return !newProjectIds.has(project.id);
+                return oldProjectIds.has(project.identifier());
             });
-
-            return null;
         })
         .catch(function (error) {
             console.log(error);

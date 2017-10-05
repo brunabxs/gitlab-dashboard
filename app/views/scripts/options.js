@@ -8,10 +8,10 @@ var Project = require('../../models/project.js');
 function saveOptions() {
     var projectsInfo = {};
     _.each($('.onoffswitch-checkbox'), function (item) {
-        var idMatch = $(item).attr('id').match(/switch([0-9]+)/);
-        if (idMatch) {
-            var id = idMatch[1];
-            projectsInfo[id] = {
+        var match = $(item).attr('id').match(/switch([\d]+#[\w\d\-\.]+)/);
+        if (match) {
+            var identifier = match[1];
+            projectsInfo[identifier] = {
                 visible: $(item).prop('checked')
             };
         }

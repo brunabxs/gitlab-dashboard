@@ -19,7 +19,7 @@ Pipeline.load = function () {
     var self = this;
     var api = Pipeline.api;
 
-    api.getRecentPipeline(self.id)
+    api.getRecentPipeline(self.id, self.branch)
         .then(function (pipeline) {
             if (pipeline) {
                 return api.getRecentJobWithScope(self.id, pipeline.id, pipeline.status);

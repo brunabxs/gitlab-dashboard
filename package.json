@@ -1,6 +1,6 @@
 {
   "name": "gitlab-dashboard",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "This extension shows a dashboard for all projects in GitLab",
   "devDependencies": {
     "chrome-store-api": "^1.0.5",

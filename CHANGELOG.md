@@ -1,3 +1,14 @@
+<a name="0.0.15"></a>
+## [0.0.15](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.14...v0.0.15) (2017-10-05)
+
+
+### Features
+
+* Allow multiple branches for the same project ([b51eb65](https://github.com/brunabxs/gitlab-dashboard/commit/b51eb65))
+* Display how many merge requests are opened for the given project+branch ([9215629](https://github.com/brunabxs/gitlab-dashboard/commit/9215629))
+
+
+
 <a name="0.0.14"></a>
 ## [0.0.14](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.13...v0.0.14) (2017-09-26)
 

@@ -25,7 +25,11 @@
             <!-- ko if: !pipeline() -->
             <div class="loading loading-project"></div>
             <!-- /ko -->
-            <footer></footer>
+            <footer>
+                <!-- ko if: mergeRequests().length -->
+                <p><span class="merge-requests" data-bind="text: mergeRequests().length"></span> MR OPENED</p>                
+                <!-- /ko -->
+            </footer>
         </div>
     </div>
 </body>

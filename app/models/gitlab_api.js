@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var $ = require('jquery');
 var Promise = require('bluebird');
 
@@ -104,9 +105,21 @@ GitlabApi.prototype.getRecentJobWithScope = function (projectId, pipelineId, job
     });
 };
 
-GitlabApi.prototype.getOpenedMergeRequests = function (projectId) {
+GitlabApi.prototype.getOpenedMergeRequests = function (projectId, branch) {
     var self = this;
-    return self.getResource('/projects/' + projectId + '/merge_requests?state=opened');
+    return new Promise(function (resolve, reject) {
+        return self.getResource('/projects/' + projectId + '/merge_requests?state=opened')
+            .then(function (mergeRequests) {
+                resolve(_.filter(mergeRequests, function (mergeRequest) {
+                    return mergeRequest.source_branch == branch;
+                }));
+                return null;
+            })
+            .catch(function (error) {
+                reject(new Error(error));
+                return null;
+            });
+    });
 };
 
 module.exports = GitlabApi;

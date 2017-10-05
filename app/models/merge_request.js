@@ -18,7 +18,7 @@ MergeRequest.load = function () {
     var self = this;
     var api = MergeRequest.api;
 
-    api.getOpenedMergeRequests(self.id)
+    api.getOpenedMergeRequests(self.id, self.branch)
         .then(function (mergeRequests) {
             self.mergeRequests(_.map(mergeRequests, function (mergeRequest) {
                 return new MergeRequest(mergeRequest.id, mergeRequest.target_branch, mergeRequest.source_branch, mergeRequest.upvotes,

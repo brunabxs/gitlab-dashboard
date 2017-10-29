@@ -1,68 +1,66 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <link href="options.css" rel="stylesheet" />
-    <script src="options.js"></script>
-</head>
+    <head>
+        <title>
+            <%= htmlWebpackPlugin.options.title %>
+        </title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="options.css" rel="stylesheet"/>
+        <script src="options.js"></script>
+    </head>
 
-<body>
-    <section id="gitlab-options" class="options">
-        <header>
-            <h5>GitLab Configuration</h5>
-        </header>
+    <body ng-app="OptionsApp" ng-controller="ProjectsController">
+        <section id="dashboard-options" class="options">
+            <header>
+                <h5>Dashboard Configuration</h5>
+            </header>
 
-        <div class="option">
-            <label class="label" for="gitlab">GitLab URL</label>
-            <input class="input" id="gitlab" type="text" />
-        </div>
+            <div class="option">
+                <label class="label" for="dashboard-refresh-rate">Dashboard Refresh Rate (seconds)</label>
+                <input ng-model="dashboard.refreshRateSec" class="input" id="dashboard-refresh-rate" type="number"
+                       min="1" required/>
+            </div>
+        </section>
 
-        <div class="option">
-            <label class="label" for="gitlab-private-token">GitLab Private Token</label>
-            <input class="input" id="gitlab-private-token" type="text" />
-        </div>
-    </section>
+        <section id="api-options" class="options">
+            <header>
+                <h5>Api Configuration</h5>
+            </header>
 
-    <section id="dashboard-options" class="options">
-        <header>
-            <h5>Dashboard Configuration</h5>
-        </header>
+            <div class="option">
+                <label class="label" for="endpoint">GitLab URL</label>
+                <input ng-model="api.api.endpoint" class="input" id="endpoint" type="text"/>
+            </div>
 
-        <div class="option">
-            <label class="label" for="dashboard-refresh-rate">Dashboard Refresh Rate (seconds)</label>
-            <input class="input" id="dashboard-refresh-rate" type="number" min="1" required />
-        </div>
-    </section>
+            <div class="option">
+                <label class="label" for="token">GitLab Private Token</label>
+                <input ng-model="api.api.token" class="input" id="token" type="text"/>
+            </div>
+        </section>
 
-    <section id="project-options" class="options">
-        <header>
-            <h5>Projects Configuration</h5>
-        </header>
-        <!-- ko if: !projects().length -->
-        <div class="loading loading-projects"></div>
-        <!-- /ko -->
-        <!-- ko foreach: projects -->
-        <div class="option">
-            <div class="label" data-bind="text: name + ' (' + branch + ')'"></div>
-            <div>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-bind="attr: {'id': 'switch' + identifier()}, checked: visible">
-                    <label class="onoffswitch-label" data-bind="attr: {'for': 'switch' + identifier()}">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
+        <section id="project-options" class="options">
+            <header>
+                <h5>Projects Configuration</h5>
+            </header>
+            <div ng-if="api.projects.length == 0" class="loading loading-projects"></div>
+            <div ng-repeat="project in api.projects" class="option">
+                <div class="label">{{ project.name }} (#{{ project.branch }})</div>
+                <div>
+                    <div class="onoffswitch">
+                        <input ng-attr-id="{{ 'switch-' + project.identifier() }}" ng-model="project.visible"
+                               type="checkbox" name="onoffswitch" class="onoffswitch-checkbox">
+                        <label class="onoffswitch-label" ng-attr-for="{{ 'switch-' + project.identifier() }}">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- /ko -->
-    </section>
+        </section>
 
-    <button id="save">Save</button>
-    <p id="status"></p>
-</body>
+        <button ng-controller="OptionsController" ng-show="canSave()" ng-click="save()" id="save">Save</button>
+        <p id="status"></p>
+    </body>
 
 </html>

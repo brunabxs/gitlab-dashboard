@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <link href="dashboard.css" rel="stylesheet" />
-    <script src="dashboard.js"></script>
-</head>
+    <head>
+        <title>
+            <%= htmlWebpackPlugin.options.title %>
+        </title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="dashboard.css" rel="stylesheet"/>
+        <script src="dashboard.js"></script>
+    </head>
 
-<body>
-    <header>
-        <img src="icons/gitlab-logo32.png" />
-    </header>
+    <body>
+        <header>
+            <img src="icons/gitlab-logo32.png"/>
+        </header>
 
-    <div id="dashboard" data-bind="foreach: visibleProjects()">
-        <div class="project" data-bind="css: status()">
-            <p class="name" data-bind="text: name"></p>
-            <!-- ko if: pipeline() -->
-            <p class="pipeline-status" data-bind="text: pipeline().status"></p>
-            <p><span class="pipeline-scope" data-bind="text: pipeline().scope"></span><span class="pipeline-branch" data-bind="text: pipeline().branch"></span></p>
-            <!-- /ko -->
-            <!-- ko if: !pipeline() -->
-            <div class="loading loading-project"></div>
-            <!-- /ko -->
-            <footer>
-                <!-- ko if: mergeRequests().length -->
-                <p><span class="merge-requests" data-bind="text: mergeRequests().length"></span> MR OPENED</p>                
-                <!-- /ko -->
-            </footer>
+        <div id="dashboard" ng-app="DashboardApp" ng-controller="ProjectsController">
+            <div ng-repeat="project in api.projects" ng-if="project.visible"
+                 class="project ng-class: project.status();">
+                <p class="name">{{ project.name }}</p>
+                <p ng-bind="project.pipeline().status" class="pipeline-status"></p>
+                <p>
+                    <span ng-bind="project.pipeline().scope" class="pipeline-scope"></span>
+                    <span ng-bind="project.pipeline().branch" class="pipeline-branch"></span>
+                </p>
+                <div ng-if="!project.pipeline()" class="loading loading-project"></div>
+                <footer>
+                    <p ng-if="project.mergeRequests()">
+                        <span ng-bind="project.mergeRequests().length" class="merge-requests"></span>&nbsp;
+                        <span>MR OPENED</span>
+                    </p>
+                </footer>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>

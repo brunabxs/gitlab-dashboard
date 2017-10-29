@@ -1,4 +1,5 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
 var path = require('path');
 var tasksConfig = require('./tasks.config.js');
 var webpack = require('webpack');
@@ -14,6 +15,9 @@ module.exports = {
         path: path.resolve(__dirname, tasksConfig.dist_dir)
     },
     plugins: [
+        new NgAnnotatePlugin({
+            add: true,
+        }),
         new webpack.optimize.UglifyJsPlugin({ compress: true, comments: false }),
         new HtmlWebpackPlugin({
             filename: 'dashboard.html',

@@ -1,43 +1,21 @@
 var _ = require('underscore');
-var $ = require('jquery');
-var ko = require('../../helpers/knockout.js');
-var Chrome = require('../../models/chrome.js');
-var GitlabApi = require('../../models/gitlab_api.js');
-var MergeRequest = require('../../models/merge_request.js');
-var Pipeline = require('../../models/pipeline.js');
-var Project = require('../../models/project.js');
+var angular = require('angular');
 
-function DashboardViewModel(api, dashboardRefreshRate, projectsInfo) {
-    var self = this;
+var ApiService = require('../../services/api.js');
+var DashboardService = require('../../services/dashboard.js');
 
-    self.projects = ko.observableArray([]);
-    self.visibleProjects = ko.pureComputed(function () {
-        return _.filter(self.projects(), function (project) { return project.visible(); }); 
-    });
+var ProjectsController = require('../../controllers/projects.js');
 
-    Project.api = api;
-    Project.viewModel = self;
-    Pipeline.api = api;
-    Pipeline.viewModel = self;
-    MergeRequest.api = api;
-    MergeRequest.viewModel = self;
+var LogProvider = require('../../providers/log.js');
+var StorageProvider = require('../../providers/storage.js');
 
-    Project.loadAll(projectsInfo);
-
-    setInterval(function () {
-        Project.updateAll();
-
-        _.each(self.projects(), function (project) {
-            if (project.visible()) {
-                Pipeline.load.call(project);
-                MergeRequest.load.call(project);
-            }
-        });
-    }, dashboardRefreshRate * 1000);
-}
-
-$(document).ready(function () {
-    Chrome.get(function (items) {
-        ko.applyBindings(new DashboardViewModel(new GitlabApi(items.gitlab, items.gitlabPrivateToken), items.dashboardRefreshRate, items.projectsInfo));
-    });
-});
+var app = angular.module('DashboardApp', [])
+    .provider('log', LogProvider)
+    .provider('storage', StorageProvider, LogProvider)
+    .config(function(storageProvider, logProvider) {
+        logProvider.load();
+        storageProvider.load();
+    })
+    .service('api', ['log', 'storage', '$interval', ApiService])
+    .service('dashboard', ['log', 'storage', DashboardService])
+    .controller('ProjectsController', ['log', 'api', 'dashboard', '$scope', '$interval', '$timeout', ProjectsController]);

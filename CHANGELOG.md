@@ -1,3 +1,14 @@
+<a name="0.0.16"></a>
+## [0.0.16](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.15...v0.0.16) (2017-11-02)
+
+
+### Features
+
+* Allow publish extension for Mozilla Firefox and Google Chrome browsers ([a6f26c4](https://github.com/brunabxs/gitlab-dashboard/commit/a6f26c4))
+* Remove KnockoutJS reference from dashboard and use AngularJS instead ([cc90589](https://github.com/brunabxs/gitlab-dashboard/commit/cc90589))
+
+
+
 <a name="0.0.15"></a>
 ## [0.0.15](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.14...v0.0.15) (2017-10-05)
 

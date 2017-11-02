@@ -1,14 +1,12 @@
-var _fs = require('fs');
 var fs = require('q-io/fs');
 var FileStorage = require('chrome-store-api').FileStorage;
+var tasksConfig = require('../tasks.config.js');
 var TokenManager = require('chrome-store-api').TokenManager;
 var WebstoreApi = require('chrome-store-api').Webstore;
 
 module.exports = function (done) {
-    var package = JSON.parse(_fs.readFileSync('./package.json'));
-
     var appId = process.env.APP_ID;
-    var zip = 'dist/gitlab-dashboard-' + package.version + '.zip';
+    var zip = tasksConfig.zip.file_path();
 
     var clientId = process.env.CLIENT_ID;
     var clientSecret = process.env.CLIENT_SECRET;

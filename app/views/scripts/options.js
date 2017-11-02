@@ -15,7 +15,7 @@ var app = angular.module('OptionsApp', [])
     .provider('storage', StorageProvider, LogProvider)
     .config(function(storageProvider, logProvider) {
         logProvider.load();
-        storageProvider.load();
+        storageProvider.load(BROWSER);
     })
     .service('api', ['log', 'storage', '$interval', ApiService])
     .service('dashboard', ['log', 'storage', DashboardService])

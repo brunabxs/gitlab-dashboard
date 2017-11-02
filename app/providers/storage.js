@@ -1,9 +1,11 @@
 var Promise = require('bluebird');
 
 module.exports = function() {
+    var storage;
+
     var get = function (defaultItem) {
         return new Promise(function (resolve, reject) {
-            chrome.storage.sync.get(defaultItem, function (item) {
+            storage.get(defaultItem, function (item) {
                 resolve(item);
             });
         });
@@ -11,17 +13,20 @@ module.exports = function() {
 
     var set = function (item) {
         return new Promise(function (resolve, reject) {
-            chrome.storage.sync.set(item, function () {
+            storage.set(item, function () {
                 resolve(item);
             });
         });
     };
 
     return {
-        load: function () {
-            // TODO: if old 'gitlab' 'gitlabPrivateToken' 'dashboardRefreshRate' 'projectsInfo'
-            //       exist, move their values
-            // TODO: remove old 'gitlab' 'gitlabPrivateToken' 'dashboardRefreshRate' 'projectsInfo'
+        load: function (browser) {
+            if (browser == 'chrome') {
+                storage = window.chrome.storage.sync;
+            }
+            else {
+                storage = window.browser.storage.local;
+            }
         },
         $get: function () {
             function getApiConfig() {

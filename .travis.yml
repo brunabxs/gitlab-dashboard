@@ -6,8 +6,8 @@ jobs:
     - stage: release
       script:
         - npm install gulp -g
-        - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_COMMIT_MESSAGE != Release* ]]; then bash ./travis-prepare-git.sh && gulp release-ci; fi;
+        - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_COMMIT_MESSAGE != Release* ]]; then bash ./travis-prepare-git.sh && gulp release-ci --browser=chrome; fi;
     - stage: publish
       script:
         - npm install gulp -g
-        - if [[ $TRAVIS_TAG ]]; then gulp publish-ci; fi;
+        - if [[ $TRAVIS_TAG ]]; then gulp publish-ci --browser=chrome --production; fi;

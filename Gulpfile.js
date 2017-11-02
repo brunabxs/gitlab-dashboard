@@ -11,6 +11,7 @@ var publishWebstore = require('./tasks/publish_webstore.js');
 var push = require('./tasks/push.js');
 var runSequence = require('run-sequence').use(gulp);
 var tag = require('./tasks/tag.js');
+var tasksConfig = require('./tasks.config.js');
 var template = require('./tasks/template.js');
 var zip = require('./tasks/zip.js');
 
@@ -45,9 +46,19 @@ gulp.task('release', function (callback) {
 });
 
 gulp.task('publish-ci', function (callback) {
-    runSequence('checkout-tag', 'package', 'publish-webstore', callback);
+    if (tasksConfig.browser == 'chrome') {
+        runSequence('checkout-tag', 'package', 'publish-webstore', callback);
+    }
+    else {
+        runSequence('checkout-tag', 'package', callback);
+    }
 });
 
 gulp.task('publish', function (callback) {
-    runSequence('package', 'publish-webstore', callback);
+    if (tasksConfig.browser == 'chrome') {
+        runSequence('package', 'publish-webstore', callback);
+    }
+    else {
+        runSequence('package', callback);
+    }
 });

@@ -3,10 +3,14 @@ node_js:
   - "node"
 jobs:
   include:
+    - stage: test
+      script:
+        - npm install gulp -g
+        - gulp test
     - stage: release
       script:
         - npm install gulp -g
-        - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_COMMIT_MESSAGE != Release* ]]; then bash ./travis-prepare-git.sh && gulp release-ci --browser=chrome; fi;
+        - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_COMMIT_MESSAGE != Release* ]]; then bash ./travis-prepare-git.sh && gulp release-ci --browser=chrome --release=major; fi;
     - stage: publish
       script:
         - npm install gulp -g

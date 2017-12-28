@@ -1,3 +1,21 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.16...v1.0.0) (2017-12-28)
+
+
+### Features
+
+* Add test stage ([763b989](https://github.com/brunabxs/gitlab-dashboard/commit/763b989))
+* Add unit tests ([d752743](https://github.com/brunabxs/gitlab-dashboard/commit/d752743))
+* Allow users to define multiple version control systems and configure its projects and branches to be displayed in dashboard ([f1a6af6](https://github.com/brunabxs/gitlab-dashboard/commit/f1a6af6))
+* Move 'lint' task to 'test' task and remove 'test' task from 'build' task ([665fd72](https://github.com/brunabxs/gitlab-dashboard/commit/665fd72))
+
+
+### BREAKING CHANGES
+
+* Previously, the user was not allowed to include projects from different version control systems. This new version has no compatibility with previous versions, so the user must redefine their projects settings.
+
+
+
 <a name="0.0.16"></a>
 ## [0.0.16](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.15...v0.0.16) (2017-11-02)
 

@@ -32,11 +32,11 @@ gulp.task('unit-test', unitTest);
 gulp.task('zip', zip);
 
 gulp.task('test', function (callback) {
-    runSequence('unit-test', callback);
+    runSequence('lint', 'unit-test', callback);
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'lint', 'test', 'template', 'bundle', callback);
+    runSequence('clean', 'template', 'bundle', callback);
 });
 
 gulp.task('package', function (callback) {

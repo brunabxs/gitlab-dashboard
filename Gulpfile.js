@@ -2,7 +2,7 @@ var bump = require('./tasks/bump.js');
 var bundle = require('./tasks/bundle.js');
 var changelog = require('./tasks/changelog.js');
 var checkout = require('./tasks/checkout.js');
-var checkoutTag = require('./tasks/checkout-tag.js');
+var checkoutTag = require('./tasks/checkout_tag.js');
 var clean = require('./tasks/clean.js');
 var commit = require('./tasks/commit.js');
 var gulp = require('gulp');
@@ -13,6 +13,7 @@ var runSequence = require('run-sequence').use(gulp);
 var tag = require('./tasks/tag.js');
 var tasksConfig = require('./tasks.config.js');
 var template = require('./tasks/template.js');
+var unitTest = require('./tasks/unit_test.js');
 var zip = require('./tasks/zip.js');
 
 gulp.task('bump', bump);
@@ -27,10 +28,15 @@ gulp.task('publish-webstore', publishWebstore);
 gulp.task('push', push);
 gulp.task('tag', tag);
 gulp.task('template', template);
+gulp.task('unit-test', unitTest);
 gulp.task('zip', zip);
 
+gulp.task('test', function (callback) {
+    runSequence('unit-test', callback);
+});
+
 gulp.task('build', function (callback) {
-    runSequence('clean', 'lint', 'template', 'bundle', callback);
+    runSequence('clean', 'lint', 'test', 'template', 'bundle', callback);
 });
 
 gulp.task('package', function (callback) {

@@ -1,8 +1,8 @@
-module.exports = function (id, scope, status, branch, commit, url) {
+module.exports = function (vcs, id, stage, status, commit, url) {
+    this._vcs = vcs;
     this.id = id;
-    this.scope = scope;
+    this.stage = stage;
     this.status = status;
-    this.branch = branch;
     this.commit = commit;
     this.url = url;
 };

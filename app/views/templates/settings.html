@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Dashboard Settings
+    </title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link href="bootstrap-3.3.7/bootstrap-3.3.7.min.css" rel="stylesheet" />
+    <link href="bootstrap-select-1.12.4/bootstrap-select-1.12.4.min.css" rel="stylesheet" />
+    <link href="settings.css" rel="stylesheet" />
+    <script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
+    <script src="bootstrap-3.3.7/bootstrap-3.3.7.min.js"></script>
+    <script src="bootstrap-select-1.12.4/bootstrap-select-1.12.4.min.js"></script>
+    <script src="settings.js"></script>
+</head>
+
+<body ng-app="SettingsApp">
+    <section class="container" id="vcs-settings" ng-controller="VersionControlSystemsSettingsController">
+        <header class="row">
+            <h3 class="col-xs-10">VCSs Settings</h3>
+            <div class="h3 col-xs-2">
+                <a ng-click="showAddVcs()" href="#" id="add">Add</a>
+            </div>
+            <!-- <h4>Version Control Systems Settings<small class="text-xs-right"><a href="#">Add</a></small></h4> -->
+        </header>
+
+        <form class="container container-fluid" id="new-vcs" style="display: none;">
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <label for="name">Name</label>
+                    <input ng-model="newVcs.name" class="form-control" id="name" type="text">
+                </div>
+
+                <div class="form-group col-xs-6">
+                    <label for="type">Type</label>
+                    <select ng-model="newVcs.type" class="form-control" id="type">
+                        <option ng-repeat="type in types">{{ type }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row" ng-if="newVcs.type == 'gitlab'">
+                <div class="form-group col-xs-6">
+                    <label for="endpoint">Endpoint</label>
+                    <input ng-model="newVcs.endpoint" class="form-control" id="endpoint" type="text" />
+                </div>
+
+                <div class="form-group col-xs-6">
+                    <label for="token">Private Token</label>
+                    <input ng-model="newVcs.token" class="form-control" id="token" type="text" />
+                </div>
+            </div>
+
+            <button ng-click="addVcs()" class="btn btn-primary" id="add">Add</button>
+            <button ng-click="cancelAddVcs()" class="btn btn-warning" id="cancel-add">Cancel</button>
+        </form>
+
+        <section class="container vcss" id="vcs-list">
+            <section ng-repeat="vcs in vcss" class="vcs" id="vcs-{{ $index }}">
+                <header>
+                    <h4>{{ vcs.name }}
+                        <br/>
+                        <small ng-if="vcs.type == 'gitlab'">
+                            <span>{{ vcs.type }}</span> -
+                            <span>{{ vcs.endpoint }}</span>
+                        </small>
+                    </h4>
+                </header>
+                <div class="vcs-actions" id="vcs-{{ $index }}-actions">
+                    <a ng-click="removeVcs($index)" href="#" id="remove">Delete</a>
+                    <span> - </span>
+                    <span ng-if="vcs.projects.length() == 0">Loading projects</span>
+                    <a ng-if="vcs.projects.length() > 0" ng-click="selectVcs($index)" href="#">Configure</a>
+                </div>
+                <div class="vcs-selected-actions" id="vcs-{{ $index }}-selected-actions" style="display: none;">
+                    <a ng-click="showProjects($index)" href="#">Configure projects</a>
+                    <span ng-if="selectedProjects.length > 0"> - </span>
+                    <a ng-if="selectedProjects.length > 0" ng-click="showBranches($index)" href="#">Configure branches</a>
+                    <span> - </span>
+                    <a ng-click="close($index)" href="#" id="close">Close</a>
+                </div>
+            </section>
+
+            <section id="projects" style="display: none;">
+                <h5>Projects
+                    <br/>
+                    <small>Select which projects you want to display in dashboard</small>
+                </h5>
+                <div class="container">
+                    <select ng-model="selectedProjects" ng-options="project.id as project.name for project in selectedVcs.projects.listAndUpdate()"
+                        ng-change="updateProjects()" class="show-tick" id="projects-list" data-selected-text-format="count" data-size="5"
+                        title="Select projects..." multiple></select>
+                </div>
+            </section>
+
+            <section id="branches" style="display: none;">
+                <h5>Project
+                    <br/>
+                    <small>Select the project to configure branch</small>
+                </h5>
+                <div class="container">
+                    <select ng-model="selectedProject" ng-options="project as project.name for project in visible(selectedVcs.projects.listAndUpdate())"
+                        ng-change="initSelectedBranches()" class="show-tick" id="projects-branches-list" title="Select project..."></select>
+                </div>
+                <h5>Branches
+                    <br/>
+                    <small>Select which branches you want to display in dashboard</small>
+                </h5>
+                <div class="container">
+                    <select ng-model="selectedBranches" ng-options="branch.id as branch.name for branch in selectedProject.branches.listAndUpdate()"
+                        ng-change="updateBranches()" class="show-tick" id="branches-list" data-selected-text-format="count" data-size="5"
+                        title="Select branches..." multiple></select>
+                </div>
+            </section>
+        </section>
+
+        <section class="container" id="buttons">
+            <div class="row">
+                <div class="col-xs-10"></div>
+                <div class="col-xs-2">
+                    <button ng-click="saveVcs()" class="btn btn-primary" id="save">Save</button>
+                </div>
+            </div>
+        </section>
+    </section>
+</body>
+
+</html>

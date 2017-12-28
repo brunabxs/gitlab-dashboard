@@ -23,7 +23,7 @@
         "persistent": false
     },
     "options_ui": {
-        "page": "options.html",
+        "page": "settings.html",
         "<%- manifest_browser_style %>": true
     },
     "permissions": [

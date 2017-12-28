@@ -19,7 +19,17 @@ header {
 }
 
 #dashboard {
+    .vcs {
+        display: inline-block;
+        vertical-align: top;
+    }
+
     .project {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .branch {
         position: relative;
         width: 180px;
         height: 180px;
@@ -51,7 +61,7 @@ header {
             background-color: #FA6900;
         }
 
-        .name {
+        .project-name {
             font-size: 12px;
             text-align: center;
             margin: 20px 20px 0px 20px;
@@ -66,12 +76,12 @@ header {
             margin: 0px 20px;
         }
 
-        .pipeline-scope {
+        .pipeline-stage {
             font-size: 14px;
             margin-right: 10px;
         }
 
-        .pipeline-branch {
+        .name {
             font-size: 14px;
             margin-left: 10px;
 
@@ -82,8 +92,8 @@ header {
         }
 
         footer {
-            width: 170px;
-            height: 15px;
+            width: 180px;
+            height: 25px;
             font-size: 10px;
             text-transform: uppercase;
             text-align: left;

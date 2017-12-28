@@ -1,6 +1,7 @@
+var _ = require('underscore');
 var Promise = require('bluebird');
 
-module.exports = function() {
+module.exports = function () {
     var storage;
 
     var get = function (defaultItem) {
@@ -29,79 +30,39 @@ module.exports = function() {
             }
         },
         $get: function () {
-            function getApiConfig() {
+            function getVcss() {
                 return new Promise(function (resolve, reject) {
                     get({
-                        api: {
-                            endpoint: '',
-                            token: '',
-                            projects_settings: {}
-                        }
+                        vcss: []
                     })
-                    .then(function (item) {
-                        resolve(item.api);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });
+                        .then(function (item) {
+                            resolve(item.vcss);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        });
                 });
             }
 
-            function getDashboardConfig() {
-                return new Promise(function (resolve, reject) {
-                    get({
-                        dashboard: {
-                            refreshRateSec: 3
-                        }
-                    })
-                    .then(function (item) {
-                        resolve(item.dashboard);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });
-                });
-            }
-
-            function saveApiConfig(endpoint, token, projectsSettings) {
+            function saveVcss(vcss) {
                 return new Promise(function (resolve, reject) {
                     set({
-                        api: {
-                            endpoint: endpoint,
-                            token: token,
-                            projects_settings: projectsSettings
-                        }
+                        vcss: _.map(vcss, function (vcs) {
+                            return vcs.serialize();
+                        })
                     })
-                    .then(function (item) {
-                        resolve(item.dashboard);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });
-                });
-            }
-
-            function saveDashboardConfig(refreshRateSec) {
-                return new Promise(function (resolve, reject) {
-                    set({
-                        dashboard: {
-                            refreshRateSec: refreshRateSec
-                        }
-                    })
-                    .then(function (item) {
-                        resolve(item.dashboard);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });                    
+                        .then(function (item) {
+                            resolve(item.vcss);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        });
                 });
             }
 
             return {
-                getDashboardConfig: getDashboardConfig,
-                getApiConfig: getApiConfig,
-                saveDashboardConfig: saveDashboardConfig,
-                saveApiConfig: saveApiConfig
+                getVcss: getVcss,
+                saveVcss: saveVcss
             };
         }
     };

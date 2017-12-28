@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Dashboard Settings
+    </title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link href="bootstrap-3.3.7/bootstrap-3.3.7.min.css" rel="stylesheet" />
+    <link href="dashboard.css" rel="stylesheet" />
+    <script src="jquery-3.2.1/jquery-3.2.1.min.js"></script>
+    <script src="bootstrap-3.3.7/bootstrap-3.3.7.min.js"></script>
+    <script src="dashboard.js"></script>
+</head>
+
+<body ng-app="DashboardApp">
+    <header>
+        <img src="icons/gitlab-logo32.png" />
+    </header>
+
+    <section ng-controller="VersionControlSystemsController" id="dashboard">
+        <section ng-repeat="vcs in vcss" class="vcs" id="vcs-{{ $index }}">
+            <section ng-repeat="project in vcs.projects.listAndUpdate()" ng-if="project.visible" class="project">
+                <div ng-repeat="branch in project.branches.listAndUpdate()" ng-if="branch.visible" class="branch ng-class: branch.status();">
+                    <p class="project-name">{{ project.name }}</p>
+                    <p ng-bind="branch.currentPipeline.getAndUpdate().status" class="pipeline-status"></p>
+                    <p>
+                        <span ng-bind="branch.currentPipeline.getAndUpdate().stage" ng-if="branch.currentPipeline.getAndUpdate().stage" class="pipeline-stage"></span>
+                        <span class="name">{{ branch.name }}</span>
+                    </p>
+                    <footer>
+                        <p ng-if="branch.openedMergeRequests.listAndUpdate()">
+                            <span ng-bind="branch.openedMergeRequests.length()" class="merge-requests"></span>&nbsp;
+                            <span>MR OPENED</span>
+                        </p>
+                    </footer>
+                </div>
+            </section>
+        </section>
+    </section>
+</body>
+
+</html>

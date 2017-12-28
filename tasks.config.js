@@ -21,6 +21,10 @@ module.exports = {
         },
     },
 
+    release: {
+        type: argv.release || 'patch',
+    },
+
     manifest: {
         browser_style: argv.browser == 'chrome' ? 'chrome_style' : 'browser_style',
     },
@@ -39,4 +43,10 @@ module.exports = {
     },
 
     browser: argv.browser,
+
+    log: {
+        type: function () {
+            return (argv.debug === undefined) ? 'error' : 'debug';
+        },
+    }
 };

@@ -18,7 +18,7 @@
     },
     "background": {
         "scripts": [
-            "start.js"
+            "scripts/start.js"
         ],
         "persistent": false
     },

@@ -9,7 +9,7 @@ module.exports = {
         start: './app/views/scripts/start.js'
     },
     output: {
-        filename: '[name].js',
+        filename: 'scripts/[name].js',
         path: path.resolve(__dirname, tasksConfig.dist_dir)
     },
     plugins: [

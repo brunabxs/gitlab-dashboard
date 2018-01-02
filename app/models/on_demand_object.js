@@ -1,12 +1,10 @@
-var _ = require('underscore');
-
 var OnDemand = require('./on_demand.js');
 
-var OnDemandObject = function (updatePromise) {
+var OnDemandObject = function (updatePromise, updateFrequencySec) {
     this._object = undefined;
     this._isUsed = false;
 
-    OnDemand.call(this, updatePromise);
+    OnDemand.call(this, updatePromise, updateFrequencySec);
 };
 
 OnDemandObject.prototype = Object.create(OnDemand.prototype);

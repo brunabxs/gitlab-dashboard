@@ -4,10 +4,12 @@ var sinon = require('sinon');
 var OnDemandArray = require('../../app/models/on_demand_array.js');
 
 describe('OnDemandArray update function', function () {
+    var clock;
     var onDemandArray;
     var updatePromiseStub;
-    var clock;
+    var updateSpy;
 
+    var updateFrequencySec = 5;
     var item1 = { 'name': 'a' };
     var item2 = { 'name': 'b' };
     var item3 = { 'name': 'c' };
@@ -15,10 +17,11 @@ describe('OnDemandArray update function', function () {
     beforeEach(function () {
         clock = sinon.useFakeTimers();
         updatePromiseStub = sinon.stub().usingPromise(bluebird.Promise);
-        onDemandArray = new OnDemandArray(1, updatePromiseStub);
+        onDemandArray = new OnDemandArray(1, updatePromiseStub, updateFrequencySec);
         onDemandArray.add(item1);
         onDemandArray.add(item2);
         onDemandArray.add(item3);
+        updateSpy = sinon.spy(onDemandArray, 'update');
     });
 
     afterEach(function () {
@@ -31,10 +34,13 @@ describe('OnDemandArray update function', function () {
         updatePromiseStub.resolves();
 
         // Act
-        onDemandArray.update(done);
+        var promise = onDemandArray.update();
 
         // Assert
-        expect(updatePromiseStub.called).toBeTruthy();
+        promise.finally(function () {
+            expect(updatePromiseStub.called).toBeTruthy();
+            done();
+        });
     });
 
     it('must lock if it is not locked', function (done) {
@@ -43,43 +49,20 @@ describe('OnDemandArray update function', function () {
         updatePromiseStub.resolves();
 
         // Act
-        onDemandArray.update(done);
+        var promise = onDemandArray.update();
 
         // Assert
-        var actual = onDemandArray._lock;
-        expect(actual).toBeTruthy();
-    });
-
-    it('must release lock when update promise resolves', function (done) {
-        // Arrange
-        onDemandArray._lock = false;
-        updatePromiseStub.resolves();
-
-        // Act
-        onDemandArray.update(done);
-
-        // Assert
-        var actual = onDemandArray._lock;
-        expect(actual).toBeTruthy();
-    });
-
-    it('must release lock when update promise rejects', function (done) {
-        // Arrange
-        onDemandArray._lock = false;
-        updatePromiseStub.rejects();
-
-        // Act
-        onDemandArray.update(done);
-
-        // Assert
-        var actual = onDemandArray._lock;
-        expect(actual).toBeTruthy();
+        promise.finally(function () {
+            var actual = onDemandArray._lock;
+            expect(actual).toBeTruthy();
+            done();
+        });
     });
 
     it('must not call update promise if it is locked', function () {
         // Arrange
         onDemandArray._lock = true;
-        
+
         // Act
         onDemandArray.update();
 
@@ -87,11 +70,35 @@ describe('OnDemandArray update function', function () {
         expect(updatePromiseStub.called).toBeFalsy();
     });
 
-    xit('must call update promise again after 3000 seconds', function () {
+    it('must call update promise again some seconds after first update promise resolves', function (done) {
         // Arrange
-        
+        onDemandArray._lock = false;
+        updatePromiseStub.resolves();
+
         // Act
+        var promise = onDemandArray.update();
 
         // Assert
+        promise.finally(function () {
+            clock.tick(updateFrequencySec * 1000);
+            expect(updateSpy.callCount).toEqual(2);
+            done();
+        });
+    });
+
+    it('must call update promise again some seconds after first update promise rejects', function (done) {
+        // Arrange
+        onDemandArray._lock = false;
+        updatePromiseStub.rejects();
+
+        // Act
+        var promise = onDemandArray.update();
+
+        // Assert
+        promise.finally(function () {
+            clock.tick(updateFrequencySec * 1000);
+            expect(updateSpy.callCount).toEqual(2);
+            done();
+        });
     });
 });

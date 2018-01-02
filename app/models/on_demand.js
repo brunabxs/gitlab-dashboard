@@ -1,22 +1,20 @@
-var _ = require('underscore');
-
-var OnDemand = function (updatePromise) {
+var OnDemand = function (updatePromise, updateFrequencySec) {
     this._lock = false;
     this._updatePromise = updatePromise;
+    this._updateFrequencyMs = (updateFrequencySec || 3) * 1000;
 };
 
-OnDemand.prototype.update = function (callback) {
+OnDemand.prototype.update = function () {
     var self = this;
 
     if (self._lock) return;
     self._lock = true;
-    self._updatePromise()
+    return self._updatePromise()
         .finally(function () {
-            self._lock = false;
-            setTimeout(function () { return self.update(callback); }, 3000);
-            if (callback) {
-                callback();
-            }
+            setTimeout(function () {
+                self._lock = false;
+                return self.update();
+            }, self._updateFrequencyMs);
         });
 };
 

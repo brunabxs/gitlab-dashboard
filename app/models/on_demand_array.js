@@ -2,12 +2,12 @@ var _ = require('underscore');
 
 var OnDemand = require('./on_demand.js');
 
-var OnDemandArray = function (expectedSize, updatePromise) {
+var OnDemandArray = function (expectedSize, updatePromise, updateFrequencySec) {
     this._expectedSize = expectedSize;
     this._array = [];
     this._isUsed = false;
 
-    OnDemand.call(this, updatePromise);
+    OnDemand.call(this, updatePromise, updateFrequencySec);
 };
 
 OnDemandArray.prototype = Object.create(OnDemand.prototype);

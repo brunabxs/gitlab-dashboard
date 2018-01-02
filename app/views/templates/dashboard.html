@@ -18,24 +18,20 @@
     </header>
 
     <section ng-controller="VersionControlSystemsController" id="dashboard">
-        <section ng-repeat="vcs in vcss" class="vcs" id="vcs-{{ $index }}">
-            <section ng-repeat="project in vcs.projects.listAndUpdate()" ng-if="project.visible" class="project">
-                <div ng-repeat="branch in project.branches.listAndUpdate()" ng-if="branch.visible" class="branch ng-class: branch.status();">
-                    <p class="project-name">{{ project.name }}</p>
-                    <p ng-bind="branch.currentPipeline.getAndUpdate().status" class="pipeline-status"></p>
-                    <p>
-                        <span ng-bind="branch.currentPipeline.getAndUpdate().stage" ng-if="branch.currentPipeline.getAndUpdate().stage" class="pipeline-stage"></span>
-                        <span class="name">{{ branch.name }}</span>
-                    </p>
-                    <footer>
-                        <p ng-if="branch.openedMergeRequests.listAndUpdate()">
-                            <span ng-bind="branch.openedMergeRequests.length()" class="merge-requests"></span>&nbsp;
-                            <span>MR OPENED</span>
-                        </p>
-                    </footer>
-                </div>
-            </section>
-        </section>
+        <div ng-repeat="branch in visibleBranches()" class="branch ng-class: branch.status();">
+            <p class="project-name">{{ branch.project.name }}</p>
+            <p ng-bind="branch.currentPipeline.getAndUpdate().status" class="pipeline-status"></p>
+            <p>
+                <span ng-bind="branch.currentPipeline.getAndUpdate().stage" ng-if="branch.currentPipeline.getAndUpdate().stage" class="pipeline-stage"></span>
+                <span class="name">{{ branch.name }}</span>
+            </p>
+            <footer>
+                <p ng-if="branch.openedMergeRequests.listAndUpdate()">
+                    <span ng-bind="branch.openedMergeRequests.length()" class="merge-requests"></span>&nbsp;
+                    <span>MR OPENED</span>
+                </p>
+            </footer>
+        </div>
     </section>
 </body>
 

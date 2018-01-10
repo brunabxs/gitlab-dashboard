@@ -51,13 +51,19 @@ module.exports = function (storage) {
     };
 
     this.save = function () {
-        Log.debug('[Service - VersionControlSystems]', 'Version control systems settings save requested');
-        storage.saveVcss(self.vcss)
-            .then(function (item) {
-                Log.debug('[Service - VersionControlSystems]', 'Version control systems settings saved');
-            })
-            .catch(function (error) {
-                Log.error('[Service - VersionControlSystems]', 'Version control system save error', error);
-            });
+        return new Promise(function (resolve, reject) {
+            Log.debug('[Service - VersionControlSystems]', 'Version control systems settings save requested');
+            storage.saveVcss(self.vcss)
+                .then(function (item) {
+                    Log.debug('[Service - VersionControlSystems]', 'Version control systems settings saved');
+                    resolve();
+                    return null;
+                })
+                .catch(function (error) {
+                    Log.error('[Service - VersionControlSystems]', 'Version control system save error', error);
+                    reject(error);
+                    return null;
+                });
+        });
     };
 };

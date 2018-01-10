@@ -41,6 +41,8 @@ module.exports = function () {
             .pipe(gulp.dest(tasksConfig.dist_dir + '/scripts')),
         gulp.src('node_modules/bootstrap-select-sass/dist/js/bootstrap-select.min.js')
             .pipe(gulp.dest(tasksConfig.dist_dir + '/scripts')),
+        gulp.src('node_modules/bootstrap-validator/dist/validator.min.js')
+            .pipe(gulp.dest(tasksConfig.dist_dir + '/scripts')),
         gulp.src('.')
             .pipe(webpack(webpackConfig))
             .pipe(gulp.dest(tasksConfig.dist_dir))

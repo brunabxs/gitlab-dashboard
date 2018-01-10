@@ -5,6 +5,7 @@
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
     "bootstrap-select-sass": "^1.7.3",
+    "bootstrap-validator": "^0.11.9",
     "chrome-store-api": "^1.0.5",
     "event-stream": "^3.3.4",
     "gulp": "^3.9.1",

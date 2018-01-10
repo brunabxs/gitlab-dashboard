@@ -1,6 +1,10 @@
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "../../../node_modules/bootstrap-select-sass/sass/bootstrap-select.scss";
 
+#messages {
+    margin-top: 10px;
+}
+
 body {
     margin: 10px 5px;
 }

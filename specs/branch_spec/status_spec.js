@@ -16,7 +16,7 @@ describe('Branch status function', function () {
 
     it('must return current pipeline status if it exists', function () {
         // Arrange
-        var expected = 'expectedStatus'
+        var expected = 'expectedStatus';
         getAndUpdateCurrentPipelineStub.returns({
             status: expected
         });
@@ -30,7 +30,7 @@ describe('Branch status function', function () {
 
     it('must return "unavailable" if current pipeline does not exist', function () {
         // Arrange
-        var expected = 'unavailable'
+        var expected = 'unavailable';
         getAndUpdateCurrentPipelineStub.returns(undefined);
 
         // Act

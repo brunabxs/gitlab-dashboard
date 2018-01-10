@@ -13,24 +13,28 @@
 </head>
 
 <body ng-app="DashboardApp">
-    <header>
-        <img src="icons/gitlab-logo32.png" />
-    </header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><img id="logo" src="icons/gitlab-logo24.png" /> Gitlab Dashboard</a>
+            </div>
+        </div>
+    </nav>
 
-    <section ng-controller="VersionControlSystemsController" id="dashboard">
-        <div ng-repeat="branch in visibleBranches()" class="branch ng-class: branch.status();">
-            <p class="project-name">{{ branch.project.name }}</p>
-            <p ng-bind="branch.currentPipeline.getAndUpdate().status" class="pipeline-status"></p>
-            <p>
-                <span ng-bind="branch.currentPipeline.getAndUpdate().stage" ng-if="branch.currentPipeline.getAndUpdate().stage" class="pipeline-stage"></span>
-                <span class="name">{{ branch.name }}</span>
-            </p>
-            <footer>
-                <p ng-if="branch.openedMergeRequests.listAndUpdate()">
-                    <span ng-bind="branch.openedMergeRequests.length()" class="merge-requests"></span>&nbsp;
-                    <span>MR OPENED</span>
-                </p>
-            </footer>
+    <section ng-controller="VersionControlSystemsController" class="container-fluid" id="dashboard">
+        <div class="row">
+            <div ng-repeat="branch in visibleBranches()" class="branch ng-class: branch.status();">
+                <p class="project-name">{{ branch.project.name }}</p>
+                <p class="branch-name">{{ branch.name }}</p>
+                <p ng-bind="branch.currentPipeline.getAndUpdate().status" class="pipeline-status"></p>
+                <p ng-bind="branch.currentPipeline.getAndUpdate().stage" ng-if="branch.currentPipeline.getAndUpdate().stage" class="pipeline-stage"></p>
+                <footer>
+                    <p ng-if="branch.openedMergeRequests.listAndUpdate()">
+                        <span ng-bind="branch.openedMergeRequests.length()" class="merge-requests"></span>&nbsp;
+                        <span>MR OPENED</span>
+                    </p>
+                </footer>
+            </div>
         </div>
     </section>
 </body>

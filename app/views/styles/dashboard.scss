@@ -1,48 +1,17 @@
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 
-* {
-    padding: 0;
-    margin: 0;
-}
-
-body {
-    font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-    font-size: 16px;
-    background-color: #F3F3F3;
-}
-
-header {
-    padding: 10px;
-    background-color: #333;
-
-    img {
-        margin: 5px;
-    }
+#logo {
+    display: inline;
+    margin-right: 10px;
 }
 
 #dashboard {
-    .vcs {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    .project {
-        display: inline-block;
-        vertical-align: top;
-    }
-
     .branch {
-        position: relative;
-        width: 180px;
-        height: 180px;
-        margin: 20px 10px 10px 10px;
-        display: inline-block;
-        vertical-align: top;
+        @extend .col-xs-12, .col-sm-6, .col-md-4, .col-lg-3;
+        border: 10px solid #FFFFFF;
+        padding: 10px;
         background-color: #666666;
         color: #F3F3F3;
-        text-align: center;
-        box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
-        -moz-box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
 
         a {
             &, &:hover, &:active, &:visited {
@@ -64,68 +33,32 @@ header {
         }
 
         .project-name {
-            font-size: 12px;
-            text-align: center;
-            margin: 20px 20px 0px 20px;
-            opacity: 0.8;
+            @extend .h4, .text-center;
         }
 
-        .pipeline-status {
-            font-size: 32px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-align: center;
-            margin: 0px 20px;
-        }
-
-        .pipeline-stage {
-            font-size: 14px;
-            margin-right: 10px;
-        }
-
-        .name {
-            font-size: 14px;
-            margin-left: 10px;
-
+        .branch-name {
+            @extend .h4, .text-center;
             &:before {
                 content: "#";
                 position: relative;
             }
         }
 
-        footer {
-            width: 180px;
-            height: 25px;
-            font-size: 10px;
-            text-transform: uppercase;
-            text-align: left;
-            border-top: 1px #CCC solid;
-            padding: 5px;
-            position: absolute;
-            bottom: 0;
-            opacity: 0.7;
+        .pipeline-status {
+            @extend .h2, .text-center;
+            letter-spacing: 1px;
         }
-    }
-}
 
-.loading {
-    animation: spin 2s linear infinite;
+        .pipeline-stage {
+            @extend .h4, .text-center;
+        }
 
-    &.loading-project {
-        border: 16px solid #F3F3F3;
-        border-top: 16px solid #FA6900;
-        border-radius: 50%;
-        margin: 10px auto;
-        width: 40px;
-        height: 40px;
-    }
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
+        footer {
+            margin-top: 20px;
+            padding: 5px;
+            width: 100%;
+            text-transform: uppercase;
+            border-top: 1px #CCC solid;
+        }
     }
 }

@@ -13,6 +13,8 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
     $scope.selectedProjects = [];
     $scope.selectedBranches = [];
 
+    $scope.hasChangesToSave = false;
+
     var resetNewVcs = function () {
         $scope.newVcs = {
             name: undefined,
@@ -23,6 +25,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
     };
 
     var showNewVcsForm = function () {
+        jQuery('#new-vcs').validator('update');
         jQuery('#new-vcs').show();
         jQuery('#vcs-list').hide();
         jQuery('#projects').hide();
@@ -31,6 +34,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
     };
 
     var hideNewVcsForm = function () {
+        jQuery('#new-vcs').validator('destroy');
         jQuery('#new-vcs').hide();
         jQuery('#vcs-list').show();
         jQuery('#buttons').show();
@@ -65,12 +69,22 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
     };
 
     var showVcssList = function (index) {
+        jQuery('#new').show();
         jQuery('#vcs-list .vcs').show();
     };
 
     var hideVcssList = function (index) {
+        jQuery('#new').hide();
         jQuery('#vcs-list .vcs').hide();
         jQuery('#vcs-list #vcs-' + index).show();
+    };
+
+    var showMessages = function (type, message) {
+        jQuery('#buttons').hide();
+        jQuery('#messages .alert-' + type + ' span').text(message);
+        jQuery('#messages .alert-' + type).show().delay(2000).fadeOut(400, function () {
+            jQuery('#buttons').show();
+        });
     };
 
     $scope.showAddVcs = function (index) {
@@ -79,6 +93,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
     };
 
     $scope.addVcs = function () {
+        $scope.hasChangesToSave = true;
         versionControlSystemsService.add($scope.newVcs.type, $scope.newVcs.name, { endpoint: $scope.newVcs.endpoint, token: $scope.newVcs.token });
         hideNewVcsForm();
     };
@@ -88,11 +103,19 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
     };
 
     $scope.removeVcs = function (index) {
+        $scope.hasChangesToSave = true;
         versionControlSystemsService.removeByIndex(index);
     };
 
     $scope.saveVcs = function () {
-        versionControlSystemsService.save();
+        versionControlSystemsService.save()
+            .then(function () {
+                showMessages('success', 'Changes have been saved.');
+                $scope.hasChangesToSave = false;
+            })
+            .catch(function (error) {
+                showMessages('error', 'Error while saving changes.');
+            });
     };
 
     $scope.visible = function (items) {
@@ -140,6 +163,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
             var index = _.indexOf($scope.selectedProjects, project.id);
             project.visible = (index >= 0);
         });
+        $scope.hasChangesToSave = true;
     };
 
     $scope.updateBranches = function () {
@@ -147,6 +171,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
             var index = _.indexOf($scope.selectedBranches, branch.id);
             branch.visible = (index >= 0);
         });
+        $scope.hasChangesToSave = true;
     };
 
     versionControlSystemsService.load();

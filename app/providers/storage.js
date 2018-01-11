@@ -47,9 +47,7 @@ module.exports = function () {
             function saveVcss(vcss) {
                 return new Promise(function (resolve, reject) {
                     set({
-                        vcss: _.map(vcss, function (vcs) {
-                            return vcs.serialize();
-                        })
+                        vcss: vcss
                     })
                         .then(function (item) {
                             resolve(item.vcss);

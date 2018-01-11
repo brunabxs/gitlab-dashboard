@@ -53,7 +53,9 @@ module.exports = function (storage) {
     this.save = function () {
         return new Promise(function (resolve, reject) {
             Log.debug('[Service - VersionControlSystems]', 'Version control systems settings save requested');
-            storage.saveVcss(self.vcss)
+            storage.saveVcss(_.map(self.vcss, function (vcs) {
+                return vcs.serialize();
+            }))
                 .then(function (item) {
                     Log.debug('[Service - VersionControlSystems]', 'Version control systems settings saved');
                     resolve();

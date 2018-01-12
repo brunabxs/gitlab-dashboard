@@ -1,3 +1,22 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.0.0...v1.1.0) (2018-01-12)
+
+
+### Bug Fixes
+
+* Ensure OnDemand objects update method is called after some seconds instead of every second ([90758e7](https://github.com/brunabxs/gitlab-dashboard/commit/90758e7))
+* Update command to generate package version ([2be242a](https://github.com/brunabxs/gitlab-dashboard/commit/2be242a))
+
+
+### Features
+
+* Improve dashboard design ([f32e671](https://github.com/brunabxs/gitlab-dashboard/commit/f32e671))
+* Load legacy storage information ([a8b66bb](https://github.com/brunabxs/gitlab-dashboard/commit/a8b66bb))
+* Remove unnecessary vcs and project sections in dashboard ([599868b](https://github.com/brunabxs/gitlab-dashboard/commit/599868b))
+* Store serialized VCSs ([5adcb27](https://github.com/brunabxs/gitlab-dashboard/commit/5adcb27))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/brunabxs/gitlab-dashboard/compare/v0.0.16...v1.0.0) (2017-12-28)
 

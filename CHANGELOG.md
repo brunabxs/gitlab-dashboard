@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/brunabxs/gitlab-dashboard/compare/v1.1.0...v1.1.1) (2018-01-17)
+
+
+### Bug Fixes
+
+* Run storage upgrade after version update ([1479aa4](https://github.com/brunabxs/gitlab-dashboard/commit/1479aa4))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.0.0...v1.1.0) (2018-01-12)
 

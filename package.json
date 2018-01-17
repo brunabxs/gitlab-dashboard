@@ -25,6 +25,7 @@
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "json-loader": "^0.5.7",
+    "proxyquire": "^1.8.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "run-sequence": "^2.0.0",

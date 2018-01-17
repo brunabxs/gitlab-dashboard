@@ -1,6 +1,6 @@
 var Promise = require('bluebird');
 
-module.exports = function() {
+module.exports = function () {
     var storage;
 
     var get = function (defaultItem) {
@@ -38,12 +38,12 @@ module.exports = function() {
                             projects_settings: {}
                         }
                     })
-                    .then(function (item) {
-                        resolve(item.api);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });
+                        .then(function (item) {
+                            resolve(item.api);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        });
                 });
             }
 
@@ -54,12 +54,12 @@ module.exports = function() {
                             refreshRateSec: 3
                         }
                     })
-                    .then(function (item) {
-                        resolve(item.dashboard);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });
+                        .then(function (item) {
+                            resolve(item.dashboard);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        });
                 });
             }
 
@@ -72,12 +72,12 @@ module.exports = function() {
                             projects_settings: projectsSettings
                         }
                     })
-                    .then(function (item) {
-                        resolve(item.dashboard);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });
+                        .then(function (item) {
+                            resolve(item.dashboard);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        });
                 });
             }
 
@@ -88,17 +88,21 @@ module.exports = function() {
                             refreshRateSec: refreshRateSec
                         }
                     })
-                    .then(function (item) {
-                        resolve(item.dashboard);
-                    })
-                    .catch(function (error) {
-                        reject(error);
-                    });                    
+                        .then(function (item) {
+                            resolve(item.dashboard);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        });
                 });
             }
 
             function clear() {
-                storage.remove(['api', 'dashboard']);
+                return new Promise(function (resolve, reject) {
+                    storage.remove(['api', 'dashboard'], function (item) {
+                        resolve(item);
+                    });
+                });
             }
 
             return {

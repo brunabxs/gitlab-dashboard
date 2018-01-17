@@ -3,7 +3,7 @@ var jquery = require('jquery');
 
 var Log = require('../models/log.js');
 
-module.exports = function (updateLegacyStorageService, versionControlSystemsService, $scope, $timeout, $interval) {
+module.exports = function (versionControlSystemsService, $scope, $interval) {
     $scope.newVcs = {};
     $scope.types = versionControlSystemsService.types;
     $scope.vcss = versionControlSystemsService.vcss;
@@ -15,9 +15,6 @@ module.exports = function (updateLegacyStorageService, versionControlSystemsServ
 
     $scope.hasChangesToSave = false;
 
-    $scope.updateStorage = undefined;
-    $scope.storageUpdated = false;
-
     var resetNewVcs = function () {
         $scope.newVcs = {
             name: undefined,
@@ -25,38 +22,6 @@ module.exports = function (updateLegacyStorageService, versionControlSystemsServ
             endpoint: undefined,
             token: undefined,
         };
-    };
-
-    var updateStorage = function () {
-        if ($scope.updateStorage === undefined) {
-            $scope.updateStorage = updateLegacyStorageService.canUpdate();
-
-            if ($scope.updateStorage === undefined) {
-                Log.debug('[Controller - VersionControlSystemsSettingsController]', 'Storage update is not defined');
-                $timeout(updateStorage, 1000);
-            }
-            else {
-                if ($scope.updateStorage === true) {
-                    Log.debug('[Controller - VersionControlSystemsSettingsController]', 'Storage update needed');
-                    Log.debug('[Controller - VersionControlSystemsSettingsController]', 'Storage update started');
-                    updateLegacyStorageService.update()
-                        .then(function () {
-                            Log.debug('[Controller - VersionControlSystemsSettingsController]', 'Storage update ended');
-                            versionControlSystemsService.load();
-                            $scope.storageUpdated = true;
-                        })
-                        .catch(function (error) {
-                            Log.error('[Controller - VersionControlSystemsSettingsController]', 'Storage update error', error);
-                            $scope.updateStorage = undefined;
-                        });
-                }
-                else {
-                    Log.debug('[Controller - VersionControlSystemsSettingsController]', 'Storage update not needed');
-                    versionControlSystemsService.load();
-                    $scope.storageUpdated = true;
-                }
-            }
-        }
     };
 
     var showNewVcsForm = function () {
@@ -209,7 +174,7 @@ module.exports = function (updateLegacyStorageService, versionControlSystemsServ
         $scope.hasChangesToSave = true;
     };
 
-    updateStorage();
+    versionControlSystemsService.load();
 
     $interval(function () {
         _.each($scope.vcss, function (item, index) {

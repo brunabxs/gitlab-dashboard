@@ -20,14 +20,6 @@
             <h3>Version Control Systems</h3>
         </header>
 
-        <!-- <div ng-if="storageUpdated && vcss.length == 0" class="well">
-            Configure a new Version Control System to display its projects in dashboard
-        </div> -->
-
-        <div ng-if="storageUpdated == false" class="well">
-            Loading...
-        </div>
-
         <form class="container" id="new-vcs" name="newVcsForm" style="display: none;" data-toggle="validator">
             <div class="row">
                 <div class="form-group col-xs-6">
@@ -138,14 +130,15 @@
             </section>
         </section>
 
-        <section ng-show="storageUpdated" class="container-fluid pull-right" id="buttons">         
+        <section class="container-fluid pull-right" id="buttons">
             <button ng-click="showAddVcs()" class="btn btn-default" id="new">New</button>
             <button ng-if="hasChangesToSave" ng-click="saveVcs()" class="btn btn-primary" id="save">Save</button>
         </section>
 
-        <section ng-show="storageUpdated" class="container" id="messages">
+        <section class="container" id="messages">
             <div class="alert alert-success" style="display: none;">
-                <strong>Success!</strong> <span></span>
+                <strong>Success!</strong>
+                <span></span>
             </div>
             <div class="alert alert-danger" style="display: none;">
                 <span></span>

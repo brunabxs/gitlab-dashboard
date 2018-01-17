@@ -36,7 +36,7 @@ gulp.task('test', function (callback) {
 });
 
 gulp.task('build', function (callback) {
-    runSequence('clean', 'template', 'bundle', callback);
+    runSequence('clean', 'test', 'template', 'bundle', callback);
 });
 
 gulp.task('package', function (callback) {

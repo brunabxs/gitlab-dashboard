@@ -13,10 +13,24 @@
 </head>
 
 <body ng-app="DashboardApp">
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse" ng-controller="NavbarController">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><img id="logo" src="icons/gitlab-logo24.png" /> Gitlab Dashboard</a>
+                <a class="navbar-brand" href="#">
+                    <img id="logo" src="icons/gitlab-logo24.png" /> Gitlab Dashboard</a>
+            </div>
+            <div class="pull-right">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a ng-click="openSettings()" href="#">
+                            <span class="glyphicon glyphicon-cog"></span> Settings</a>
+                    </li>
+                    <li>
+                        <div class="navbar-btn">
+                            <button ng-click="openFeedback()" class="btn btn-danger">Feedback</button>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

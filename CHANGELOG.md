@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.1.1...v1.2.0) (2018-01-21)
+
+
+### Features
+
+* Add Google Analytics to track pageviews and events ([78b4f42](https://github.com/brunabxs/gitlab-dashboard/commit/78b4f42))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/brunabxs/gitlab-dashboard/compare/v1.1.0...v1.1.1) (2018-01-17)
 

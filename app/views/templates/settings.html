@@ -29,7 +29,7 @@
 
                 <div class="form-group col-xs-6">
                     <label for="type">Type</label>
-                    <select ng-model="newVcs.type" class="form-control" id="type" name="type">
+                    <select ng-change="clickVcsType()" ng-model="newVcs.type" class="form-control" id="type" name="type">
                         <option ng-repeat="type in types">{{ type }}</option>
                     </select>
                 </div>
@@ -38,7 +38,7 @@
             <div class="row" ng-show="newVcs.type == 'gitlab'">
                 <div class="form-group col-xs-6">
                     <label for="endpoint" class="control-label">Endpoint</label>
-                    <a href="https://docs.gitlab.com/ee/api/README.html#basic-usage">
+                    <a ng-click="clickGitlabEndpointInfo()" href="https://docs.gitlab.com/ee/api/README.html#basic-usage">
                         <span class="glyphicon glyphicon-info-sign"></span>
                     </a>
                     <input ng-model="newVcs.endpoint" placeholder="https://gitlab.com/api/v4" class="form-control" id="endpoint" name="endpoint"
@@ -49,7 +49,7 @@
 
                 <div class="form-group col-xs-6">
                     <label for="token" class="control-label">Private Token</label>
-                    <a href="https://docs.gitlab.com/ce/user/profile/personal_access_tokens.html#creating-a-personal-access-token">
+                    <a ng-click="clickGitlabTokenInfo()" href="https://docs.gitlab.com/ce/user/profile/personal_access_tokens.html#creating-a-personal-access-token">
                         <span class="glyphicon glyphicon-info-sign"></span>
                     </a>
                     <input ng-model="newVcs.token" required class="form-control" id="token" name="token" type="text" data-error="Missing token."

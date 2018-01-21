@@ -1,5 +1,7 @@
 var angular = require('angular');
+var jquery = require('jquery');
 
+var Analytics = require('../../models/analytics.js');
 var StorageProvider = require('../../providers/storage.js');
 var VersionControlSystemsController = require('../../controllers/version_control_systems.js');
 var VersionControlSystemsService = require('../../services/version_control_systems.js');
@@ -11,3 +13,12 @@ var app = angular.module('DashboardApp', [])
     })
     .service('versionControlSystemsService', ['storage', VersionControlSystemsService])
     .controller('VersionControlSystemsController', ['versionControlSystemsService', '$scope', '$interval', VersionControlSystemsController]);
+
+jquery(document).ready(function () {
+    var ga = new Analytics(GA_ID);
+    ga.set('checkProtocolTask', function () { });
+    ga.set('dimension1', VERSION);
+    ga.set('dimension2', BROWSER);
+    ga.set('page', '/dashboard');
+    ga.pageview('/dashboard');
+});

@@ -46,8 +46,10 @@ module.exports = function (storage) {
     };
 
     this.removeByIndex = function (index) {
+        var vcs = self.vcss[index];
         self.vcss.splice(index, 1);
         Log.debug('[Service - VersionControlSystems]', 'Version control system removed');
+        return vcs;
     };
 
     this.save = function () {

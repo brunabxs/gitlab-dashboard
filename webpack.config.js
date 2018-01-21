@@ -14,6 +14,8 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
+            GA_ID: JSON.stringify('UA-112412081-1'),
+            VERSION: JSON.stringify(tasksConfig.package.version()),
             BROWSER: JSON.stringify(tasksConfig.browser),
             LOG_TYPE: JSON.stringify(tasksConfig.log.type()),
         })

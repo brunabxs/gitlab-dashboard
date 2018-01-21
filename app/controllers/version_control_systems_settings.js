@@ -5,7 +5,7 @@ var Analytics = require('../models/analytics.js');
 var Log = require('../models/log.js');
 
 module.exports = function (versionControlSystemsService, $scope, $interval) {
-    var ga = new Analytics(GA_ID);
+    var ga = new Analytics(GA_ID, BROWSER, VERSION, '/settings');
 
     $scope.newVcs = {};
     $scope.types = versionControlSystemsService.types;

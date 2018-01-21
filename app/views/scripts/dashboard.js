@@ -15,10 +15,6 @@ var app = angular.module('DashboardApp', [])
     .controller('VersionControlSystemsController', ['versionControlSystemsService', '$scope', '$interval', VersionControlSystemsController]);
 
 jquery(document).ready(function () {
-    var ga = new Analytics(GA_ID);
-    ga.set('checkProtocolTask', function () { });
-    ga.set('dimension1', VERSION);
-    ga.set('dimension2', BROWSER);
-    ga.set('page', '/dashboard');
-    ga.pageview('/dashboard');
+    var ga = new Analytics(GA_ID, BROWSER, VERSION, '/dashboard');
+    ga.pageview();
 });

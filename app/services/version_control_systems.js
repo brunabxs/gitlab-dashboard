@@ -8,7 +8,7 @@ module.exports = function (storage) {
     var self = this;
 
     this.vcss = [];
-    this.types = ['gitlab'];
+    this.types = ['gitlab', 'github-travisci', 'tfs', 'other'];
 
     this.load = function () {
         return new Promise(function (resolve, reject) {
@@ -34,6 +34,9 @@ module.exports = function (storage) {
         var vcs;
         if (type === 'gitlab') {
             vcs = new GitlabVcs(name || 'Gitlab API', settings.endpoint, settings.token, projectsSettings);
+        }
+        else if (type === 'github-travisci' || type === 'tfs' || type === 'other') {
+            return;
         }
         else {
             Log.error('[Service - VersionControlSystems]', 'Version control system unknown');

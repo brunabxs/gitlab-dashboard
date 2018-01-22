@@ -35,6 +35,25 @@
                 </div>
             </div>
 
+            <div class="row" ng-show="newVcs.type == 'github-travisci'">
+                <div class="well">
+                    This will be developed soon!
+                </div>
+            </div>
+
+            <div class="row" ng-show="newVcs.type == 'tfs'">
+                <div class="well">
+                    This will be developed soon!
+                </div>
+            </div>
+
+            <div class="row" ng-show="newVcs.type == 'other'">
+                <div class="well">
+                    Which VCS do you want?
+                    <a href="https://github.com/brunabxs/gitlab-dashboard/issues/9">Tell me here</a>!
+                </div>
+            </div>
+
             <div class="row" ng-show="newVcs.type == 'gitlab'">
                 <div class="form-group col-xs-6">
                     <label for="endpoint" class="control-label">Endpoint</label>
@@ -57,7 +76,7 @@
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            <button ng-click="addVcs()" class="btn btn-primary" id="add">Add</button>
+            <button ng-click="addVcs()" ng-show="newVcs.type == 'gitlab'" class="btn btn-primary" id="add">Add</button>
             <button ng-click="cancelAddVcs()" class="btn btn-warning" id="cancel-add">Cancel</button>
         </form>
 

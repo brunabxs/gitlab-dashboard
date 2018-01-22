@@ -1,3 +1,13 @@
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.3.0...v1.4.0) (2018-01-22)
+
+
+### Features
+
+* Add new VCSs ([cf69f52](https://github.com/brunabxs/gitlab-dashboard/commit/cf69f52))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.2.1...v1.3.0) (2018-01-22)
 

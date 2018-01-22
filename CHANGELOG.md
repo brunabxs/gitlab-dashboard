@@ -1,3 +1,14 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.2.1...v1.3.0) (2018-01-22)
+
+
+### Features
+
+* Add Donate button to README.md ([12abc7c](https://github.com/brunabxs/gitlab-dashboard/commit/12abc7c))
+* Add navbar and button to open options page ([5343f22](https://github.com/brunabxs/gitlab-dashboard/commit/5343f22))
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/brunabxs/gitlab-dashboard/compare/v1.2.0...v1.2.1) (2018-01-21)
 

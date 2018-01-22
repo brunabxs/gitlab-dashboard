@@ -21,7 +21,7 @@ To help developers to monitor Gitlab projects health, Gitlab Dashboard was devel
 
 **Monitor your Gitlab projects/branches** in our browser! At the moment, we support only Mozilla Firefox and Google Chrome.
 
-![Dashboard view](https://user-images.githubusercontent.com/1449015/34854373-81725466-f720-11e7-9164-9d58bb47f9c0.png)
+![Dashboard view](https://user-images.githubusercontent.com/1449015/35201596-f7449556-ff03-11e7-8625-1a99af794e64.png)
 
 
 **Manage your Gitlab projects/branches** to display in dashboard just those items that you need.

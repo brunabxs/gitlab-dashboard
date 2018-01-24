@@ -1,10 +1,4 @@
-var jquery = require('jquery');
-
-var Analytics = require('../models/analytics.js');
-
-module.exports = function ($scope) {
-    var ga = new Analytics(GA_ID, BROWSER, VERSION, '/dashboard');
-
+module.exports = function (analyticsService, $scope) {
     $scope.openSettings = function () {
         var browser;
 
@@ -15,7 +9,7 @@ module.exports = function ($scope) {
             browser = window.browser;
         }
 
-        ga.event('navbar', 'click', 'settings', 0);
+        analyticsService.event('navbar', 'click', 'settings', 0);
         browser.runtime.openOptionsPage(function () { });
     };
 
@@ -29,7 +23,12 @@ module.exports = function ($scope) {
             feedbackPage = 'https://addons.mozilla.org/en-US/firefox/addon/gitlab-dashboard/';
         }
 
-        ga.event('navbar', 'click', 'feedback', 0);
+        analyticsService.event('navbar', 'click', 'feedback', 0);
         window.open(feedbackPage);
     };
+
+    analyticsService.load()
+        .then(function () {
+            analyticsService.pageview();
+        });
 };

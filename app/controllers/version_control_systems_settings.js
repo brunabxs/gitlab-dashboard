@@ -1,12 +1,9 @@
 var _ = require('underscore');
 var jquery = require('jquery');
 
-var Analytics = require('../models/analytics.js');
 var Log = require('../models/log.js');
 
-module.exports = function (versionControlSystemsService, $scope, $interval) {
-    var ga = new Analytics(GA_ID, BROWSER, VERSION, '/settings');
-
+module.exports = function (analyticsService, versionControlSystemsService, $scope, $interval) {
     $scope.newVcs = {};
     $scope.types = versionControlSystemsService.types;
     $scope.vcss = versionControlSystemsService.vcss;
@@ -96,33 +93,33 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
     };
 
     $scope.clickVcsType = function () {
-        ga.event('vcs', 'select', $scope.newVcs.type, 0);
+        analyticsService.event('vcs', 'select', $scope.newVcs.type, 0);
     };
 
     $scope.clickGitlabEndpointInfo = function () {
-        ga.event('vcs', 'info', 'gitlab-endpoint', 0);
+        analyticsService.event('vcs', 'info', 'gitlab-endpoint', 0);
     };
 
     $scope.clickGitlabTokenInfo = function () {
-        ga.event('vcs', 'info', 'gitlab-token', 0);
+        analyticsService.event('vcs', 'info', 'gitlab-token', 0);
     };
 
     $scope.addVcs = function () {
         $scope.hasChangesToSave = true;
         versionControlSystemsService.add($scope.newVcs.type, $scope.newVcs.name, { endpoint: $scope.newVcs.endpoint, token: $scope.newVcs.token });
         hideNewVcsForm();
-        ga.event('vcs', 'add', $scope.newVcs.type, 10);
+        analyticsService.event('vcs', 'add', $scope.newVcs.type, 10);
     };
 
     $scope.cancelAddVcs = function () {
         hideNewVcsForm();
-        ga.event('vcs', 'cancelAdd', $scope.newVcs.type, 0);
+        analyticsService.event('vcs', 'cancelAdd', $scope.newVcs.type, 0);
     };
 
     $scope.removeVcs = function (index) {
         $scope.hasChangesToSave = true;
         var vcs = versionControlSystemsService.removeByIndex(index);
-        ga.event('vcs', 'remove', vcs.type, 3);
+        analyticsService.event('vcs', 'remove', vcs.type, 3);
     };
 
     $scope.saveVcs = function () {
@@ -133,9 +130,9 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
             })
             .catch(function (error) {
                 showMessages('error', 'Error while saving changes.');
-                ga.exception('Error while saving changes.', false);
+                analyticsService.exception('Error while saving changes.', false);
             });
-        ga.event('vcs', 'save', 'all', 5);
+        analyticsService.event('vcs', 'save', 'all', 5);
     };
 
     $scope.visible = function (items) {
@@ -169,7 +166,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
             $scope.selectedProjects.push(project.id);
             project.branches.listAndUpdate();
         });
-        ga.event('project', 'load', 'all', 0);
+        analyticsService.event('project', 'load', 'all', 0);
     };
 
     $scope.initSelectedBranches = function () {
@@ -177,7 +174,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
         _.each($scope.visible($scope.selectedProject.branches.listAndUpdate()), function (branch) {
             $scope.selectedBranches.push(branch.id);
         });
-        ga.event('branch', 'load', 'all', 0);
+        analyticsService.event('branch', 'load', 'all', 0);
     };
 
     $scope.updateProjects = function () {
@@ -186,7 +183,7 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
             project.visible = (index >= 0);
         });
         $scope.hasChangesToSave = true;
-        ga.event('project', 'update', 'all', 0);
+        analyticsService.event('project', 'update', 'all', 0);
     };
 
     $scope.updateBranches = function () {
@@ -195,10 +192,15 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
             branch.visible = (index >= 0);
         });
         $scope.hasChangesToSave = true;
-        ga.event('branch', 'update', 'all', 0);
+        analyticsService.event('branch', 'update', 'all', 0);
     };
 
-    versionControlSystemsService.load();
+    analyticsService.load()
+        .then(function () {
+            analyticsService.pageview();
+            versionControlSystemsService.load();
+        });
+
 
     $interval(function () {
         _.each($scope.vcss, function (item, index) {

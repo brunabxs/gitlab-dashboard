@@ -39,7 +39,7 @@ describe('Update Legacy Storage update function', function () {
                 return {
                     getApiConfig: getApiConfigLegacyStorageProviderStub,
                     clear: clearLegacyStorageProviderStub,
-                }
+                };
             },
         };
 

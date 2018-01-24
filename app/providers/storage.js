@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var Promise = require('bluebird');
+var uuidv4 = require('uuid/v4');
 
 module.exports = function () {
     var storage;
@@ -58,9 +59,31 @@ module.exports = function () {
                 });
             }
 
+            function getAnalytics() {
+                var self = this;
+                return new Promise(function (resolve, reject) {
+                    get({
+                        analytics: {}
+                    })
+                        .then(function (item) {
+                            if (_.isEmpty(item.analytics)) {
+                                return set({ analytics: { clientId: uuidv4() } });
+                            }
+                            return Promise.resolve(item);
+                        })
+                        .then(function (item) {
+                            resolve(item.analytics);
+                        })
+                        .catch(function (error) {
+                            reject(error);
+                        });
+                });
+            }
+
             return {
                 getVcss: getVcss,
-                saveVcss: saveVcss
+                saveVcss: saveVcss,
+                getAnalytics: getAnalytics
             };
         }
     };

@@ -2,7 +2,7 @@ var _ = require('underscore');
 
 var Log = require('../models/log.js');
 
-module.exports = function (versionControlSystemsService, $scope, $interval) {
+module.exports = function (analyticsService, versionControlSystemsService, $scope, $interval) {
     $scope.vcss = versionControlSystemsService.vcss;
 
     $scope.visibleBranches = function () {
@@ -22,7 +22,11 @@ module.exports = function (versionControlSystemsService, $scope, $interval) {
         return branches;
     };
 
-    versionControlSystemsService.load();
+    analyticsService.load()
+        .then(function () {
+            analyticsService.pageview();
+            versionControlSystemsService.load();
+        });
 
     $interval(function () {
         Log.debug('[Controller - VersionControlSystemsController]', 'Interface updated');

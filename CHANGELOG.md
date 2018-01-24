@@ -1,3 +1,8 @@
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/brunabxs/gitlab-dashboard/compare/v1.4.0...v1.4.1) (2018-01-24)
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.3.0...v1.4.0) (2018-01-22)
 

@@ -1,5 +1,4 @@
 var angular = require('angular');
-var jquery = require('jquery');
 
 var Analytics = require('../../models/analytics.js');
 var StorageProvider = require('../../providers/storage.js');
@@ -14,7 +13,7 @@ var app = angular.module('SettingsApp', [])
     .service('versionControlSystemsService', ['storage', VersionControlSystemsService])
     .controller('VersionControlSystemsSettingsController', ['versionControlSystemsService', '$scope', '$interval', VersionControlSystemsSettingsController]);
 
-jquery(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function (event) {
     var ga = new Analytics(GA_ID, BROWSER, VERSION, '/settings');
     ga.pageview();
 });

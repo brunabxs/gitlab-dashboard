@@ -1,5 +1,4 @@
 var angular = require('angular');
-var jquery = require('jquery');
 
 var Analytics = require('../../models/analytics.js');
 var StorageProvider = require('../../providers/storage.js');
@@ -16,7 +15,7 @@ var app = angular.module('DashboardApp', [])
     .controller('NavbarController', ['$scope', NavbarController])
     .controller('VersionControlSystemsController', ['versionControlSystemsService', '$scope', '$interval', VersionControlSystemsController]);
 
-jquery(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function (event) {
     var ga = new Analytics(GA_ID, BROWSER, VERSION, '/dashboard');
     ga.pageview();
 });

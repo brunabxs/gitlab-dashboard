@@ -51,6 +51,7 @@ module.exports = function () {
                     debug: true,
                     insertGlobalVars: {
                         GA_ID: function (file, dir) { return JSON.stringify('UA-112412081-1'); },
+                        ENVIRONMENT: function (file, dir) { return JSON.stringify(tasksConfig.environment.type()); },
                         VERSION: function (file, dir) { return JSON.stringify(tasksConfig.package.version()); },
                         BROWSER: function (file, dir) { return JSON.stringify(tasksConfig.browser); },
                         LOG_TYPE: function (file, dir) { return JSON.stringify(tasksConfig.log.type()); },

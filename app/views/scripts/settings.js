@@ -8,12 +8,13 @@ var VersionControlSystemsSettingsController = require('../../controllers/version
 var app = angular.module('SettingsApp', [])
     .constant('page', '/settings')
     .constant('analyticsId', GA_ID)
+    .constant('environment', ENVIRONMENT)
     .constant('version', VERSION)
     .constant('browser', BROWSER)
     .provider('storage', StorageProvider)
     .config(function (storageProvider) {
         storageProvider.load(BROWSER);
     })
-    .service('analyticsService', ['storage', 'analyticsId', 'version', 'browser', 'page', AnalyticsService])
+    .service('analyticsService', ['storage', 'analyticsId', 'environment', 'version', 'browser', 'page', AnalyticsService])
     .service('versionControlSystemsService', ['storage', VersionControlSystemsService])
     .controller('VersionControlSystemsSettingsController', ['analyticsService', 'versionControlSystemsService', '$scope', '$interval', VersionControlSystemsSettingsController]);

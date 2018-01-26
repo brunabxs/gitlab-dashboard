@@ -2,11 +2,12 @@ var analytics = require('universal-analytics');
 
 var Log = require('../models/log.js');
 
-module.exports = function (storage, analyticsId, version, browser, page) {
+module.exports = function (storage, analyticsId, environment, version, browser, page, host) {
     var self =  this;
 
     this.ga = undefined;
     this.analyticsId = analyticsId;
+    this.environment = environment;
     this.version = version;
     this.browser = browser;
     this.page = page;
@@ -16,7 +17,6 @@ module.exports = function (storage, analyticsId, version, browser, page) {
             Log.debug('[Service - AnalyticsService]', 'Analytics settings load requested');
             storage.getAnalytics()
                 .then(function (loadedAnalytics) {
-                    console.log(loadedAnalytics);
                     self.ga = analytics(self.analyticsId, loadedAnalytics.clientId);
                     Log.debug('[Service - AnalyticsService]', 'Analytics settings loaded');
                     resolve();
@@ -37,7 +37,8 @@ module.exports = function (storage, analyticsId, version, browser, page) {
             el: label,
             ev: value,
             cd1: self.version,
-            cd2: self.browser
+            cd2: self.browser,
+            cd3: self.environment
         }).send();
     };
     
@@ -46,7 +47,8 @@ module.exports = function (storage, analyticsId, version, browser, page) {
             exd: message,
             exf: isFatal || false,
             cd1: self.version,
-            cd2: self.browser
+            cd2: self.browser,
+            cd3: self.environment
         }).send();
     };
     
@@ -55,7 +57,8 @@ module.exports = function (storage, analyticsId, version, browser, page) {
             dh: 'local',
             dp: self.page,
             cd1: self.version,
-            cd2: self.browser
+            cd2: self.browser,
+            cd3: self.environment
         }).send();
     };    
 };

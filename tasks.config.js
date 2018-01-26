@@ -40,6 +40,9 @@ module.exports = {
         isProd: function () {
             return (argv.production === undefined) ? false : true;
         },
+        type: function () {
+            return (argv.production === undefined) ? 'development' : 'production';
+        },
     },
 
     browser: argv.browser,

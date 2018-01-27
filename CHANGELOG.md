@@ -1,3 +1,19 @@
+<a name="1.4.2"></a>
+## [1.4.2](https://github.com/brunabxs/gitlab-dashboard/compare/v1.4.1...v1.4.2) (2018-01-27)
+
+
+### Bug Fixes
+
+* Show Donate button in GitHub correctly ([e1fde96](https://github.com/brunabxs/gitlab-dashboard/commit/e1fde96))
+* Use an analytics service instead of model ([702e59a](https://github.com/brunabxs/gitlab-dashboard/commit/702e59a))
+
+
+### Features
+
+* Add environment information to analytics ([3641883](https://github.com/brunabxs/gitlab-dashboard/commit/3641883))
+
+
+
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/brunabxs/gitlab-dashboard/compare/v1.4.0...v1.4.1) (2018-01-24)
 

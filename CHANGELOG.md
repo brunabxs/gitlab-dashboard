@@ -1,3 +1,13 @@
+<a name="1.4.3"></a>
+## [1.4.3](https://github.com/brunabxs/gitlab-dashboard/compare/v1.4.2...v1.4.3) (2018-02-01)
+
+
+### Bug Fixes
+
+* Remove test task from build task in Gulpfile ([becb998](https://github.com/brunabxs/gitlab-dashboard/commit/becb998))
+
+
+
 <a name="1.4.2"></a>
 ## [1.4.2](https://github.com/brunabxs/gitlab-dashboard/compare/v1.4.1...v1.4.2) (2018-01-27)
 

@@ -17,7 +17,7 @@ var Branch = function (vcs, projectId, id, name, visible, settings) {
     this.visible = visible || false;
     this.settings = settings || {};
     this.currentPipeline = new OnDemandObject(function () { return self._updatePipeline(); });
-    this.openedMergeRequests = new OnDemandArray(function () { return self._updateOpenedMergeRequests(); });
+    this.openedMergeRequests = new OnDemandArray(0, function () { return self._updateOpenedMergeRequests(); });
 };
 
 Branch.prototype.status = function () {

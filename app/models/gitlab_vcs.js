@@ -214,7 +214,7 @@ GitlabVcs.prototype.getOpenedMergeRequests = function (projectId, sourceBranchId
             .then(function (response) {
                 var mergeRequests = JSON.parse(response.body) || [];
                 resolve(_.filter(mergeRequests, function (mergeRequest) {
-                    return mergeRequest.source_branch == branch;
+                    return mergeRequest.target_branch == targetBranchId;
                 }));
                 return null;
             })

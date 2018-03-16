@@ -1,5 +1,17 @@
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 
+$background-color: #EDEDE7;
+$text-color: #666666;
+$success-color: #5D9D5D;
+$failed-color: #C1172D;
+$pending-color: #FA6900;
+$canceled-color: #999999;
+$running-color: #BFA100;
+
+body {
+    background-color: $background-color;
+}
+
 #logo {
     display: inline;
     margin-right: 10px;
@@ -8,36 +20,99 @@
 #dashboard {
     .branch {
         @extend .col-xs-12, .col-sm-6, .col-md-4, .col-lg-3;
-        border: 10px solid #FFFFFF;
-        padding: 10px;
-        background-color: #666666;
-        color: #F3F3F3;
+        position: relative;
+        padding: 10px 0px 10px 40px;
+        border: 10px solid $background-color;
+        color: $text-color;
+        background-color: #FFFFFF;
 
         a {
             &, &:hover, &:active, &:visited {
-                color: #F3F3F3;
+                color: $text-color;
                 text-decoration: none;
             }
         }
 
+        &:before {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 30px;
+            height: 100%;
+            font-size: 20px;
+            text-align: center;
+            color: #FFFFFF;
+            font-family: "Glyphicons Halflings";
+        }
+
         &.success {
-            background-color: #5D9D5D;
+            .project-name,
+            .branch-name {
+                color: $success-color;
+            }
+
+            &:before {
+                content:"\e089";
+                background-color: $success-color;
+            }
         }
 
         &.failed {
-            background-color: #C1172D;
+            .project-name,
+            .branch-name {
+                color: $failed-color;
+            }
+
+            &:before {
+                content:"\e088";
+                background-color: $failed-color;
+            }
         }
 
         &.pending {
-            background-color: #FA6900;
+            .project-name,
+            .branch-name {
+                color: $pending-color;
+            }
+
+            &:before {
+                content:"\e023";
+                background-color: $pending-color;
+            }
+        }
+
+        &.canceled {
+            .project-name,
+            .branch-name {
+                color: $canceled-color;
+            }
+
+            &:before {
+                content:"\e090";
+                background-color: $canceled-color;
+            }
+        }
+
+        &.running {
+            .project-name,
+            .branch-name {
+                color: $running-color;
+            }
+
+            &:before {
+                content:"\e029";
+                background-color: $running-color;
+            }
         }
 
         .project-name {
-            @extend .h4, .text-center;
+            @extend .h2;
+            margin-top: 10px;
         }
 
         .branch-name {
-            @extend .h4, .text-center;
+            @extend .h4;
+
             &:before {
                 content: "#";
                 position: relative;
@@ -45,20 +120,21 @@
         }
 
         .pipeline-status {
-            @extend .h2, .text-center;
+            display: none;
             letter-spacing: 1px;
         }
 
         .pipeline-stage {
-            @extend .h4, .text-center;
+            // @extend .lead;
         }
 
-        footer {
-            margin-top: 20px;
-            padding: 5px;
-            width: 100%;
+        .merge-requests {
             text-transform: uppercase;
-            border-top: 1px #CCC solid;
+
+            .total {
+                @extend .h3;
+                font-weight: bold;
+            }
         }
     }
 }

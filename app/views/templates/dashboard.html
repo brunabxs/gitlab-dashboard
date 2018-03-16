@@ -38,16 +38,14 @@
     <section ng-controller="VersionControlSystemsController" class="container-fluid" id="dashboard">
         <div class="row">
             <div ng-repeat="branch in visibleBranches()" class="branch ng-class: branch.status();">
-                <p class="project-name">{{ branch.project.name }}</p>
                 <p class="branch-name">{{ branch.name }}</p>
-                <p ng-bind="branch.currentPipeline.getAndUpdate().status" class="pipeline-status"></p>
-                <p ng-bind="branch.currentPipeline.getAndUpdate().stage" ng-if="branch.currentPipeline.getAndUpdate().stage" class="pipeline-stage"></p>
-                <footer>
-                    <p ng-if="branch.openedMergeRequests.listAndUpdate()">
-                        <span ng-bind="branch.openedMergeRequests.length()" class="merge-requests"></span>&nbsp;
-                        <span>MR OPENED</span>
-                    </p>
-                </footer>
+                <p class="project-name">{{ branch.project.name }}</p>
+                <p ng-if="branch.currentPipeline.getAndUpdate().stage" class="pipeline-stage">
+                    <span class="glyphicon glyphicon-time"></span>&nbsp;<span ng-bind="branch.currentPipeline.getAndUpdate().stage"></span>
+                </p>
+                <p class="merge-requests" ng-if="branch.openedMergeRequests.listAndUpdate()">
+                    <span class="total" ng-bind="branch.openedMergeRequests.length()"></span>&nbsp;<span>opened merge requests</span>
+                </p>
             </div>
         </div>
     </section>

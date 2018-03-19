@@ -1,6 +1,6 @@
 {
   "name": "gitlab-dashboard",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "description": "This extension shows a dashboard for all projects in GitLab",
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",

@@ -1,3 +1,13 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/brunabxs/gitlab-dashboard/compare/v1.4.4...v1.5.0) (2018-03-19)
+
+
+### Features
+
+* Update interface ([50f33d5](https://github.com/brunabxs/gitlab-dashboard/commit/50f33d5))
+
+
+
 <a name="1.4.4"></a>
 ## [1.4.4](https://github.com/brunabxs/gitlab-dashboard/compare/v1.4.3...v1.4.4) (2018-03-16)
 
